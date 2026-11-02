@@ -1,0 +1,4210 @@
+{
+  "metadata": {
+    "title": "Palm Oil Stock Analytics VAR/VECM Pipeline",
+    "total_observations": 144,
+    "training_observations": 132,
+    "testing_observations": 12,
+    "date_start": "2013-01",
+    "date_end": "2024-12",
+    "variables": ["SMAR", "AALI", "SIMP"],
+    "timestamp": "2026-11-02 08:48:45.733045"
+  },
+  "eda": {
+    "descriptive": {
+      "SMAR": {
+        "variable": "SMAR",
+        "count": 132,
+        "mean": 4731.02,
+        "sd": 1368.24,
+        "median": 4320,
+        "min": 2470,
+        "max": 9800,
+        "q25": 3865,
+        "q75": 5150,
+        "skewness": 1.1799,
+        "kurtosis": 0.9479
+      },
+      "AALI": {
+        "variable": "AALI",
+        "count": 132,
+        "mean": 13928.26,
+        "sd": 5209.53,
+        "median": 12887.5,
+        "min": 5400,
+        "max": 28014,
+        "q25": 9956.25,
+        "q75": 16797.75,
+        "skewness": 0.7199,
+        "kurtosis": -0.2521
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "count": 132,
+        "mean": 527.11,
+        "sd": 191.03,
+        "median": 480,
+        "min": 202,
+        "max": 1150,
+        "q25": 413.5,
+        "q75": 595,
+        "skewness": 1.1937,
+        "kurtosis": 1.118
+      }
+    },
+    "correlation": {
+      "SMAR": {
+        "SMAR": 1,
+        "AALI": 0.669,
+        "SIMP": 0.8047
+      },
+      "AALI": {
+        "SMAR": 0.669,
+        "AALI": 1,
+        "SIMP": 0.7871
+      },
+      "SIMP": {
+        "SMAR": 0.8047,
+        "AALI": 0.7871,
+        "SIMP": 1
+      }
+    },
+    "bartlett": {
+      "test_name": "Bartlett's Test of Sphericity",
+      "statistic": 260.7326,
+      "df": 3,
+      "p_value": 0,
+      "det_r": 0.1328,
+      "is_significant": true,
+      "conclusion": "Variabel saling berkorelasi signifikan (H0 ditolak). Data LAYAK untuk pemodelan multivariat VAR/VECM."
+    }
+  },
+  "stationarity": {
+    "level": {
+      "SMAR": {
+        "variable": "SMAR",
+        "test_statistic": -2.5306,
+        "p_value": 0.3559,
+        "lag_order": 5,
+        "is_stationary": false,
+        "status": "TIDAK STASIONER",
+        "interpretation": "P-value (0.3559) >= 0.05, gagal tolak H0. Deret SMAR mengandung unit root (tidak stasioner pada level)."
+      },
+      "AALI": {
+        "variable": "AALI",
+        "test_statistic": -3.0304,
+        "p_value": 0.148,
+        "lag_order": 5,
+        "is_stationary": false,
+        "status": "TIDAK STASIONER",
+        "interpretation": "P-value (0.1480) >= 0.05, gagal tolak H0. Deret AALI mengandung unit root (tidak stasioner pada level)."
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "test_statistic": -2.6991,
+        "p_value": 0.2858,
+        "lag_order": 5,
+        "is_stationary": false,
+        "status": "TIDAK STASIONER",
+        "interpretation": "P-value (0.2858) >= 0.05, gagal tolak H0. Deret SIMP mengandung unit root (tidak stasioner pada level)."
+      }
+    },
+    "first_difference": {
+      "SMAR": {
+        "variable": "ΔSMAR",
+        "test_statistic": -5.5468,
+        "p_value": 0.01,
+        "lag_order": 5,
+        "is_stationary": true,
+        "status": "STASIONER",
+        "interpretation": "P-value (0.0100) < 0.05, tolak H0. Deret first difference SMAR stasioner (terintegrasi I(1))."
+      },
+      "AALI": {
+        "variable": "ΔAALI",
+        "test_statistic": -5.1576,
+        "p_value": 0.01,
+        "lag_order": 5,
+        "is_stationary": true,
+        "status": "STASIONER",
+        "interpretation": "P-value (0.0100) < 0.05, tolak H0. Deret first difference AALI stasioner (terintegrasi I(1))."
+      },
+      "SIMP": {
+        "variable": "ΔSIMP",
+        "test_statistic": -5.7072,
+        "p_value": 0.01,
+        "lag_order": 5,
+        "is_stationary": true,
+        "status": "STASIONER",
+        "interpretation": "P-value (0.0100) < 0.05, tolak H0. Deret first difference SIMP stasioner (terintegrasi I(1))."
+      }
+    },
+    "all_stationary_level": false,
+    "all_stationary_diff1": true,
+    "summary": {
+      "order_of_integration": "I(1)",
+      "recommendation": "Semua variabel stasioner pada first difference (I(1)) -> Lanjutkan ke Uji Kointegrasi Johansen."
+    }
+  },
+  "lag_selection": {
+    "criteria_table": {
+      "lag_1": {
+        "lag": 1,
+        "aic": 34.208,
+        "hq": 34.3172,
+        "sc": 34.4768,
+        "fpe": 718435000000000
+      },
+      "lag_2": {
+        "lag": 2,
+        "aic": 33.9951,
+        "hq": 34.1862,
+        "sc": 34.4654,
+        "fpe": 580790000000000
+      },
+      "lag_3": {
+        "lag": 3,
+        "aic": 33.8978,
+        "hq": 34.1708,
+        "sc": 34.5697,
+        "fpe": 527316000000000
+      },
+      "lag_4": {
+        "lag": 4,
+        "aic": 33.9475,
+        "hq": 34.3023,
+        "sc": 34.8209,
+        "fpe": 554801000000000
+      },
+      "lag_5": {
+        "lag": 5,
+        "aic": 33.8923,
+        "hq": 34.3291,
+        "sc": 34.9673,
+        "fpe": 526027000000000
+      }
+    },
+    "selections": {
+      "aic": 5,
+      "hq": 3,
+      "sc": 2,
+      "fpe": 5
+    },
+    "optimal_lag": 5,
+    "criterion_used": "Akaike Information Criterion (AIC)"
+  },
+  "cointegration": {
+    "test_type": "Johansen Trace Test",
+    "ecdet": "const",
+    "spec": "longrun",
+    "K": 5,
+    "trace_table": [
+      {
+        "hypothesis": "None (r = 0)",
+        "statistic": 43.99,
+        "critical_10pct": 32,
+        "critical_5pct": 34.91,
+        "critical_1pct": 41.07,
+        "decision": "Tolak H0 (r >= 1)",
+        "significant": true
+      },
+      {
+        "hypothesis": "At most 1 (r <= 1)",
+        "statistic": 17.86,
+        "critical_10pct": 17.85,
+        "critical_5pct": 19.96,
+        "critical_1pct": 24.6,
+        "decision": "Gagal Tolak H0 (r = 1)",
+        "significant": false
+      },
+      {
+        "hypothesis": "At most 2 (r <= 2)",
+        "statistic": 4.36,
+        "critical_10pct": 7.52,
+        "critical_5pct": 9.24,
+        "critical_1pct": 12.97,
+        "decision": "Gagal Tolak H0 (r = 2)",
+        "significant": false
+      }
+    ],
+    "cointegration_rank": 1,
+    "has_cointegration": true,
+    "interpretation": "Trace statistic menolak H0: r=0 (43.99 > 34.91 pada α=5%), sehingga terdapat 1 hubungan kointegrasi. Hal ini membuktikan adanya hubungan keseimbangan jangka panjang antar harga saham kelapa sawit."
+  },
+  "model_decision": {
+    "model_code": "VECM",
+    "model_name": "Vector Error Correction Model (VECM)",
+    "rule_id": "RULE_2_VECM",
+    "optimal_lag": 5,
+    "cointegration_rank": 1,
+    "justification": "Data tidak stasioner pada level namun stasioner pada first difference (terintegrasi pada derajat yang sama I(1)), serta hasil Uji Kointegrasi Johansen mengonfirmasi adanya 1 hubungan kointegrasi pada α=5%. Oleh karena itu, model yang tepat adalah VECM(K=5, r=1). VECM mampu memisahkan dinamika penyesuaian jangka pendek (differencing) dan mekanisme koreksi menuju keseimbangan jangka panjang (Error Correction Term).",
+    "flowchart": {
+      "step1_stationarity_level": {
+        "title": "Uji Stasioneritas Level (ADF)",
+        "condition": "Apakah semua deret I(0)?",
+        "result": false,
+        "status": "Tidak Lolos (Perlu Differencing)"
+      },
+      "step2_stationarity_diff": {
+        "title": "Uji Stasioneritas First Difference (ADF)",
+        "condition": "Apakah semua deret I(1)?",
+        "result": true,
+        "status": "Lolos (Semua I(1))"
+      },
+      "step3_cointegration": {
+        "title": "Uji Kointegrasi Johansen",
+        "condition": "Apakah terdapat kointegrasi (r > 0)?",
+        "result": true,
+        "rank": 1,
+        "status": "Lolos (1 Hubungan Kointegrasi)"
+      },
+      "final_decision": {
+        "model_code": "VECM",
+        "model_name": "Vector Error Correction Model (VECM)",
+        "rule_id": "RULE_2_VECM"
+      }
+    }
+  },
+  "model_estimation": {
+    "model_type": "VECM",
+    "cointegration_rank": 1,
+    "optimal_lag": 5,
+    "ect_summary": {
+      "SMAR": {
+        "variable": "SMAR",
+        "coefficient": -0.2863,
+        "std_error": 0.0574,
+        "t_statistic": -4.9877,
+        "p_value": 2.207e-06,
+        "significance": "***",
+        "is_significant": true,
+        "speed_of_adjustment_pct": 28.63,
+        "interpretation": "Koefisien ECT negatif signifikan (-0.2863, p < 0.05). Terjadi penyesuaian menuju keseimbangan jangka panjang sebesar 28.63% per periode pasca shock."
+      },
+      "AALI": {
+        "variable": "AALI",
+        "coefficient": -0.0828,
+        "std_error": 0.201,
+        "t_statistic": -0.412,
+        "p_value": 0.6811,
+        "significance": "",
+        "is_significant": false,
+        "speed_of_adjustment_pct": 8.28,
+        "interpretation": "Koefisien ECT tidak signifikan (p = 0.6811 >= 0.05). Variabel AALI tidak merespons deviasi keseimbangan jangka panjang secara signifikan dan cenderung bergerak independen."
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "coefficient": -0.0002,
+        "std_error": 0.006,
+        "t_statistic": -0.0403,
+        "p_value": 0.9679,
+        "significance": "",
+        "is_significant": false,
+        "speed_of_adjustment_pct": 0.02,
+        "interpretation": "Koefisien ECT tidak signifikan (p = 0.9679 >= 0.05). Variabel SIMP tidak merespons deviasi keseimbangan jangka panjang secara signifikan dan cenderung bergerak independen."
+      }
+    },
+    "equations": {
+      "SMAR": {
+        "target_variable": "ΔSMAR",
+        "formula_string": "ΔSMAR(t) = - 0.2863 * ect1 - 0.4430 * SMAR.dl1 - 0.0033 * AALI.dl1 + 4.1992 * SIMP.dl1 - 0.1047 * SMAR.dl2 + 0.0054 * AALI.dl2 - 1.1656 * SIMP.dl2 - 0.3735 * SMAR.dl3 - 0.0568 * AALI.dl3 + 1.2760 * SIMP.dl3 - 0.5112 * SMAR.dl4 - 0.0152 * AALI.dl4 + 3.2912 * SIMP.dl4",
+        "r_squared": 0.4025,
+        "adj_r_squared": 0.3344,
+        "residual_se": 402.13,
+        "f_statistic": 5.908,
+        "f_p_value": 2.947e-08,
+        "coefficients": {
+          "ect1": {
+            "term": "ect1",
+            "estimate": -0.2863,
+            "std_error": 0.0574,
+            "t_statistic": -4.9877,
+            "p_value": 2.207e-06,
+            "significance": "***"
+          },
+          "SMAR.dl1": {
+            "term": "SMAR.dl1",
+            "estimate": -0.443,
+            "std_error": 0.0928,
+            "t_statistic": -4.775,
+            "p_value": 5.385e-06,
+            "significance": "***"
+          },
+          "AALI.dl1": {
+            "term": "AALI.dl1",
+            "estimate": -0.0033,
+            "std_error": 0.0301,
+            "t_statistic": -0.108,
+            "p_value": 0.9142,
+            "significance": ""
+          },
+          "SIMP.dl1": {
+            "term": "SIMP.dl1",
+            "estimate": 4.1992,
+            "std_error": 1.0031,
+            "t_statistic": 4.1863,
+            "p_value": 0.0001,
+            "significance": "***"
+          },
+          "SMAR.dl2": {
+            "term": "SMAR.dl2",
+            "estimate": -0.1047,
+            "std_error": 0.1034,
+            "t_statistic": -1.0124,
+            "p_value": 0.3135,
+            "significance": ""
+          },
+          "AALI.dl2": {
+            "term": "AALI.dl2",
+            "estimate": 0.0054,
+            "std_error": 0.0301,
+            "t_statistic": 0.1807,
+            "p_value": 0.8569,
+            "significance": ""
+          },
+          "SIMP.dl2": {
+            "term": "SIMP.dl2",
+            "estimate": -1.1656,
+            "std_error": 0.9632,
+            "t_statistic": -1.2102,
+            "p_value": 0.2287,
+            "significance": ""
+          },
+          "SMAR.dl3": {
+            "term": "SMAR.dl3",
+            "estimate": -0.3735,
+            "std_error": 0.0956,
+            "t_statistic": -3.9083,
+            "p_value": 0.0002,
+            "significance": "***"
+          },
+          "AALI.dl3": {
+            "term": "AALI.dl3",
+            "estimate": -0.0568,
+            "std_error": 0.0293,
+            "t_statistic": -1.9374,
+            "p_value": 0.0552,
+            "significance": "."
+          },
+          "SIMP.dl3": {
+            "term": "SIMP.dl3",
+            "estimate": 1.276,
+            "std_error": 0.9713,
+            "t_statistic": 1.3137,
+            "p_value": 0.1916,
+            "significance": ""
+          },
+          "SMAR.dl4": {
+            "term": "SMAR.dl4",
+            "estimate": -0.5112,
+            "std_error": 0.0978,
+            "t_statistic": -5.2252,
+            "p_value": 7.946e-07,
+            "significance": "***"
+          },
+          "AALI.dl4": {
+            "term": "AALI.dl4",
+            "estimate": -0.0152,
+            "std_error": 0.029,
+            "t_statistic": -0.5242,
+            "p_value": 0.6011,
+            "significance": ""
+          },
+          "SIMP.dl4": {
+            "term": "SIMP.dl4",
+            "estimate": 3.2912,
+            "std_error": 0.8818,
+            "t_statistic": 3.7322,
+            "p_value": 0.0003,
+            "significance": "***"
+          }
+        }
+      },
+      "AALI": {
+        "target_variable": "ΔAALI",
+        "formula_string": "ΔAALI(t) = - 0.0828 * ect1 - 0.8757 * SMAR.dl1 - 0.2200 * AALI.dl1 + 10.7900 * SIMP.dl1 + 0.6552 * SMAR.dl2 - 0.0945 * AALI.dl2 - 4.2319 * SIMP.dl2 - 0.0183 * SMAR.dl3 - 0.0757 * AALI.dl3 + 1.9167 * SIMP.dl3 - 0.5546 * SMAR.dl4 + 0.0222 * AALI.dl4 - 3.6069 * SIMP.dl4",
+        "r_squared": 0.2359,
+        "adj_r_squared": 0.1488,
+        "residual_se": 1408.32,
+        "f_statistic": 2.708,
+        "f_p_value": 0.0023,
+        "coefficients": {
+          "ect1": {
+            "term": "ect1",
+            "estimate": -0.0828,
+            "std_error": 0.201,
+            "t_statistic": -0.412,
+            "p_value": 0.6811,
+            "significance": ""
+          },
+          "SMAR.dl1": {
+            "term": "SMAR.dl1",
+            "estimate": -0.8757,
+            "std_error": 0.3249,
+            "t_statistic": -2.6954,
+            "p_value": 0.0081,
+            "significance": "**"
+          },
+          "AALI.dl1": {
+            "term": "AALI.dl1",
+            "estimate": -0.22,
+            "std_error": 0.1054,
+            "t_statistic": -2.0864,
+            "p_value": 0.0392,
+            "significance": "*"
+          },
+          "SIMP.dl1": {
+            "term": "SIMP.dl1",
+            "estimate": 10.79,
+            "std_error": 3.5129,
+            "t_statistic": 3.0715,
+            "p_value": 0.0027,
+            "significance": "**"
+          },
+          "SMAR.dl2": {
+            "term": "SMAR.dl2",
+            "estimate": 0.6552,
+            "std_error": 0.3622,
+            "t_statistic": 1.8091,
+            "p_value": 0.0731,
+            "significance": "."
+          },
+          "AALI.dl2": {
+            "term": "AALI.dl2",
+            "estimate": -0.0945,
+            "std_error": 0.1054,
+            "t_statistic": -0.8967,
+            "p_value": 0.3718,
+            "significance": ""
+          },
+          "SIMP.dl2": {
+            "term": "SIMP.dl2",
+            "estimate": -4.2319,
+            "std_error": 3.3732,
+            "t_statistic": -1.2546,
+            "p_value": 0.2122,
+            "significance": ""
+          },
+          "SMAR.dl3": {
+            "term": "SMAR.dl3",
+            "estimate": -0.0183,
+            "std_error": 0.3347,
+            "t_statistic": -0.0547,
+            "p_value": 0.9565,
+            "significance": ""
+          },
+          "AALI.dl3": {
+            "term": "AALI.dl3",
+            "estimate": -0.0757,
+            "std_error": 0.1028,
+            "t_statistic": -0.7366,
+            "p_value": 0.4629,
+            "significance": ""
+          },
+          "SIMP.dl3": {
+            "term": "SIMP.dl3",
+            "estimate": 1.9167,
+            "std_error": 3.4015,
+            "t_statistic": 0.5635,
+            "p_value": 0.5742,
+            "significance": ""
+          },
+          "SMAR.dl4": {
+            "term": "SMAR.dl4",
+            "estimate": -0.5546,
+            "std_error": 0.3426,
+            "t_statistic": -1.6187,
+            "p_value": 0.1083,
+            "significance": ""
+          },
+          "AALI.dl4": {
+            "term": "AALI.dl4",
+            "estimate": 0.0222,
+            "std_error": 0.1016,
+            "t_statistic": 0.2185,
+            "p_value": 0.8275,
+            "significance": ""
+          },
+          "SIMP.dl4": {
+            "term": "SIMP.dl4",
+            "estimate": -3.6069,
+            "std_error": 3.0883,
+            "t_statistic": -1.1679,
+            "p_value": 0.2453,
+            "significance": ""
+          }
+        }
+      },
+      "SIMP": {
+        "target_variable": "ΔSIMP",
+        "formula_string": "ΔSIMP(t) = - 0.0002 * ect1 - 0.0441 * SMAR.dl1 + 0.0005 * AALI.dl1 + 0.3801 * SIMP.dl1 + 0.0096 * SMAR.dl2 + 0.0001 * AALI.dl2 - 0.1194 * SIMP.dl2 + 0.0045 * SMAR.dl3 + 0.0013 * AALI.dl3 - 0.0254 * SIMP.dl3 + 0.0074 * SMAR.dl4 - 0.0056 * AALI.dl4 + 0.0126 * SIMP.dl4",
+        "r_squared": 0.2873,
+        "adj_r_squared": 0.2061,
+        "residual_se": 42.15,
+        "f_statistic": 3.536,
+        "f_p_value": 0.0001,
+        "coefficients": {
+          "ect1": {
+            "term": "ect1",
+            "estimate": -0.0002,
+            "std_error": 0.006,
+            "t_statistic": -0.0403,
+            "p_value": 0.9679,
+            "significance": ""
+          },
+          "SMAR.dl1": {
+            "term": "SMAR.dl1",
+            "estimate": -0.0441,
+            "std_error": 0.0097,
+            "t_statistic": -4.5365,
+            "p_value": 0,
+            "significance": "***"
+          },
+          "AALI.dl1": {
+            "term": "AALI.dl1",
+            "estimate": 0.0005,
+            "std_error": 0.0032,
+            "t_statistic": 0.1633,
+            "p_value": 0.8706,
+            "significance": ""
+          },
+          "SIMP.dl1": {
+            "term": "SIMP.dl1",
+            "estimate": 0.3801,
+            "std_error": 0.1051,
+            "t_statistic": 3.6155,
+            "p_value": 0.0004,
+            "significance": "***"
+          },
+          "SMAR.dl2": {
+            "term": "SMAR.dl2",
+            "estimate": 0.0096,
+            "std_error": 0.0108,
+            "t_statistic": 0.882,
+            "p_value": 0.3796,
+            "significance": ""
+          },
+          "AALI.dl2": {
+            "term": "AALI.dl2",
+            "estimate": 0.0001,
+            "std_error": 0.0032,
+            "t_statistic": 0.0383,
+            "p_value": 0.9695,
+            "significance": ""
+          },
+          "SIMP.dl2": {
+            "term": "SIMP.dl2",
+            "estimate": -0.1194,
+            "std_error": 0.1009,
+            "t_statistic": -1.1829,
+            "p_value": 0.2393,
+            "significance": ""
+          },
+          "SMAR.dl3": {
+            "term": "SMAR.dl3",
+            "estimate": 0.0045,
+            "std_error": 0.01,
+            "t_statistic": 0.4459,
+            "p_value": 0.6565,
+            "significance": ""
+          },
+          "AALI.dl3": {
+            "term": "AALI.dl3",
+            "estimate": 0.0013,
+            "std_error": 0.0031,
+            "t_statistic": 0.4308,
+            "p_value": 0.6674,
+            "significance": ""
+          },
+          "SIMP.dl3": {
+            "term": "SIMP.dl3",
+            "estimate": -0.0254,
+            "std_error": 0.1018,
+            "t_statistic": -0.2493,
+            "p_value": 0.8036,
+            "significance": ""
+          },
+          "SMAR.dl4": {
+            "term": "SMAR.dl4",
+            "estimate": 0.0074,
+            "std_error": 0.0103,
+            "t_statistic": 0.7193,
+            "p_value": 0.4735,
+            "significance": ""
+          },
+          "AALI.dl4": {
+            "term": "AALI.dl4",
+            "estimate": -0.0056,
+            "std_error": 0.003,
+            "t_statistic": -1.8498,
+            "p_value": 0.0669,
+            "significance": "."
+          },
+          "SIMP.dl4": {
+            "term": "SIMP.dl4",
+            "estimate": 0.0126,
+            "std_error": 0.0924,
+            "t_statistic": 0.1366,
+            "p_value": 0.8916,
+            "significance": ""
+          }
+        }
+      }
+    },
+    "cointegrating_vector": {
+      "SMAR.l5": 1,
+      "AALI.l5": 0.1421,
+      "SIMP.l5": -10.3518,
+      "constant": -1186.5374
+    }
+  },
+  "diagnostics": {
+    "normality": {
+      "SMAR": {
+        "variable": "SMAR",
+        "statistic": 3.5792,
+        "p_value": 0.167,
+        "is_normal": true,
+        "status": "NORMAL",
+        "interpretation": "P-value (0.1670) > 0.05. Residual SMAR berdistribusi normal."
+      },
+      "AALI": {
+        "variable": "AALI",
+        "statistic": 1.4334,
+        "p_value": 0.4884,
+        "is_normal": true,
+        "status": "NORMAL",
+        "interpretation": "P-value (0.4884) > 0.05. Residual AALI berdistribusi normal."
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "statistic": 3.4785,
+        "p_value": 0.1757,
+        "is_normal": true,
+        "status": "NORMAL",
+        "interpretation": "P-value (0.1757) > 0.05. Residual SIMP berdistribusi normal."
+      }
+    },
+    "autocorrelation": {
+      "SMAR": {
+        "variable": "SMAR",
+        "statistic": 8.9816,
+        "p_value": 0.7045,
+        "lag": 12,
+        "no_autocorrelation": true,
+        "status": "BEBAS AUTOKORELASI",
+        "interpretation": "P-value (0.7045) > 0.05. Tidak terdapat autokorelasi serial pada residual SMAR."
+      },
+      "AALI": {
+        "variable": "AALI",
+        "statistic": 12.5968,
+        "p_value": 0.399,
+        "lag": 12,
+        "no_autocorrelation": true,
+        "status": "BEBAS AUTOKORELASI",
+        "interpretation": "P-value (0.3990) > 0.05. Tidak terdapat autokorelasi serial pada residual AALI."
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "statistic": 15.3372,
+        "p_value": 0.2235,
+        "lag": 12,
+        "no_autocorrelation": true,
+        "status": "BEBAS AUTOKORELASI",
+        "interpretation": "P-value (0.2235) > 0.05. Tidak terdapat autokorelasi serial pada residual SIMP."
+      }
+    },
+    "heteroscedasticity": {
+      "SMAR": {
+        "variable": "SMAR",
+        "statistic": 4.9633,
+        "p_value": 0.4204,
+        "lags": 5,
+        "is_homoscedastic": true,
+        "status": "HOMOSKEDASTISITAS",
+        "interpretation": "P-value (0.4204) > 0.05. Varians residual SMAR konstan (homoskedastisitas, tidak ada efek ARCH)."
+      },
+      "AALI": {
+        "variable": "AALI",
+        "statistic": 7.282,
+        "p_value": 0.2005,
+        "lags": 5,
+        "is_homoscedastic": true,
+        "status": "HOMOSKEDASTISITAS",
+        "interpretation": "P-value (0.2005) > 0.05. Varians residual AALI konstan (homoskedastisitas, tidak ada efek ARCH)."
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "statistic": 2.4124,
+        "p_value": 0.7896,
+        "lags": 5,
+        "is_homoscedastic": true,
+        "status": "HOMOSKEDASTISITAS",
+        "interpretation": "P-value (0.7896) > 0.05. Varians residual SIMP konstan (homoskedastisitas, tidak ada efek ARCH)."
+      }
+    },
+    "multicollinearity": {
+      "vif": {
+        "SMAR": {
+          "variable": "SMAR",
+          "values": {
+            "AALI": 23.1501,
+            "SIMP": 26.7219,
+            "SMAR.l1": 14.5838,
+            "AALI.l1": 32.0476,
+            "SIMP.l1": 61.623,
+            "SMAR.l2": 23.0467,
+            "AALI.l2": 29.7425,
+            "SIMP.l2": 53.7036,
+            "SMAR.l3": 20.9982,
+            "AALI.l3": 28.5038,
+            "SIMP.l3": 54.3214,
+            "SMAR.l4": 21.9213,
+            "AALI.l4": 28.8955,
+            "SIMP.l4": 56.8206,
+            "SMAR.l5": 12.7776,
+            "AALI.l5": 18.9478,
+            "SIMP.l5": 27.611
+          },
+          "max_vif": 61.623,
+          "has_multicollinearity": true,
+          "interpretation": "VIF Maksimum = 61.6230 (>= 10). Terdapat indikasi multikolinearitas pada persamaan SMAR."
+        },
+        "AALI": {
+          "variable": "AALI",
+          "values": {
+            "SMAR": 12.5976,
+            "SIMP": 19.4295,
+            "SMAR.l1": 20.023,
+            "AALI.l1": 20.9518,
+            "SIMP.l1": 57.8667,
+            "SMAR.l2": 23.1867,
+            "AALI.l2": 29.4855,
+            "SIMP.l2": 56.9721,
+            "SMAR.l3": 21.4097,
+            "AALI.l3": 29.2912,
+            "SIMP.l3": 54.9648,
+            "SMAR.l4": 21.663,
+            "AALI.l4": 28.3177,
+            "SIMP.l4": 56.8793,
+            "SMAR.l5": 12.631,
+            "AALI.l5": 18.9798,
+            "SIMP.l5": 27.3554
+          },
+          "max_vif": 57.8667,
+          "has_multicollinearity": true,
+          "interpretation": "VIF Maksimum = 57.8667 (>= 10). Terdapat indikasi multikolinearitas pada persamaan AALI."
+        },
+        "SIMP": {
+          "variable": "SIMP",
+          "values": {
+            "SMAR": 12.3654,
+            "AALI": 16.5222,
+            "SMAR.l1": 17.4786,
+            "AALI.l1": 29.6048,
+            "SIMP.l1": 29.3006,
+            "SMAR.l2": 22.7606,
+            "AALI.l2": 29.6728,
+            "SIMP.l2": 56.3823,
+            "SMAR.l3": 21.6994,
+            "AALI.l3": 29.1679,
+            "SIMP.l3": 55.3557,
+            "SMAR.l4": 21.8449,
+            "AALI.l4": 27.2645,
+            "SIMP.l4": 57.6131,
+            "SMAR.l5": 12.7048,
+            "AALI.l5": 18.6034,
+            "SIMP.l5": 27.6192
+          },
+          "max_vif": 57.6131,
+          "has_multicollinearity": true,
+          "interpretation": "VIF Maksimum = 57.6131 (>= 10). Terdapat indikasi multikolinearitas pada persamaan SIMP."
+        }
+      },
+      "condition_number": {
+        "value": 2073.0691,
+        "threshold": 30,
+        "has_serious_multicollinearity": true,
+        "status": "TERINDIKASI MULTIKOLINEARITAS",
+        "interpretation": "Condition Number = 2073.0691 (>= 30). Terdapat multikolinearitas antar variabel lag."
+      }
+    },
+    "stability": {
+      "max_modulus": 0.962,
+      "is_stable": true,
+      "status": "STABIL (Semua Modulus < 1)",
+      "roots": {
+        "root_1": {
+          "real": 0.962,
+          "imaginary": 0,
+          "modulus": 0.962
+        },
+        "root_2": {
+          "real": 0.8882,
+          "imaginary": 0,
+          "modulus": 0.8882
+        },
+        "root_3": {
+          "real": 0.8882,
+          "imaginary": 0,
+          "modulus": 0.8882
+        },
+        "root_4": {
+          "real": 0.7895,
+          "imaginary": 0,
+          "modulus": 0.7895
+        },
+        "root_5": {
+          "real": 0.7895,
+          "imaginary": 0,
+          "modulus": 0.7895
+        },
+        "root_6": {
+          "real": 0.7279,
+          "imaginary": 0,
+          "modulus": 0.7279
+        },
+        "root_7": {
+          "real": 0.7279,
+          "imaginary": 0,
+          "modulus": 0.7279
+        },
+        "root_8": {
+          "real": 0.7073,
+          "imaginary": 0,
+          "modulus": 0.7073
+        },
+        "root_9": {
+          "real": 0.7073,
+          "imaginary": 0,
+          "modulus": 0.7073
+        },
+        "root_10": {
+          "real": 0.6929,
+          "imaginary": 0,
+          "modulus": 0.6929
+        },
+        "root_11": {
+          "real": 0.6929,
+          "imaginary": 0,
+          "modulus": 0.6929
+        },
+        "root_12": {
+          "real": 0.5979,
+          "imaginary": 0,
+          "modulus": 0.5979
+        },
+        "root_13": {
+          "real": 0.5979,
+          "imaginary": 0,
+          "modulus": 0.5979
+        },
+        "root_14": {
+          "real": 0.4959,
+          "imaginary": 0,
+          "modulus": 0.4959
+        },
+        "root_15": {
+          "real": 0.2316,
+          "imaginary": 0,
+          "modulus": 0.2316
+        }
+      },
+      "interpretation": "Semua akar karakteristik berada di dalam lingkaran satuan (Maximum Modulus = 0.9620 < 1). Sistem dinamis VAR/VECM stabil."
+    }
+  },
+  "relationships": {
+    "granger_multivariate": {
+      "SMAR": {
+        "cause": "SMAR",
+        "target": "AALI & SIMP",
+        "f_statistic": 4.2072,
+        "df1": 10,
+        "df2": 333,
+        "p_value": 0,
+        "is_causal": true,
+        "conclusion": "P-value (0.0000) < 0.05. SMAR memengaruhi (Granger-cause) AALI & SIMP secara signifikan."
+      },
+      "AALI": {
+        "cause": "AALI",
+        "target": "SMAR & SIMP",
+        "f_statistic": 1.6409,
+        "df1": 10,
+        "df2": 333,
+        "p_value": 0.0938,
+        "is_causal": false,
+        "conclusion": "P-value (0.0938) >= 0.05. AALI tidak memengaruhi SMAR & SIMP secara signifikan."
+      },
+      "SIMP": {
+        "cause": "SIMP",
+        "target": "SMAR & AALI",
+        "f_statistic": 5.9237,
+        "df1": 10,
+        "df2": 333,
+        "p_value": 2.943e-08,
+        "is_causal": true,
+        "conclusion": "P-value (0.0000) < 0.05. SIMP memengaruhi (Granger-cause) SMAR & AALI secara signifikan."
+      }
+    },
+    "granger_pairwise": [
+      {
+        "cause": "SIMP",
+        "effect": "SMAR",
+        "f_statistic": 9.4703,
+        "p_value": 0,
+        "is_significant": true,
+        "direction": "SIMP → SMAR"
+      },
+      {
+        "cause": "SMAR",
+        "effect": "SIMP",
+        "f_statistic": 5.7548,
+        "p_value": 0.0001,
+        "is_significant": true,
+        "direction": "SMAR → SIMP"
+      },
+      {
+        "cause": "AALI",
+        "effect": "SMAR",
+        "f_statistic": 1.5199,
+        "p_value": 0.1889,
+        "is_significant": false,
+        "direction": "AALI ↛ SMAR"
+      },
+      {
+        "cause": "SMAR",
+        "effect": "AALI",
+        "f_statistic": 3.7429,
+        "p_value": 0.0035,
+        "is_significant": true,
+        "direction": "SMAR → AALI"
+      },
+      {
+        "cause": "AALI",
+        "effect": "SIMP",
+        "f_statistic": 0.4267,
+        "p_value": 0.8293,
+        "is_significant": false,
+        "direction": "AALI ↛ SIMP"
+      },
+      {
+        "cause": "SIMP",
+        "effect": "AALI",
+        "f_statistic": 2.755,
+        "p_value": 0.0217,
+        "is_significant": true,
+        "direction": "SIMP → AALI"
+      }
+    ],
+    "irf": {
+      "SMAR": [
+        {
+          "period": 0,
+          "shock_SMAR": 381,
+          "lower_SMAR": 305.12,
+          "upper_SMAR": 401.43,
+          "shock_AALI": 0,
+          "lower_AALI": 0,
+          "upper_AALI": 0,
+          "shock_SIMP": 0,
+          "lower_SIMP": 0,
+          "upper_SIMP": 0
+        },
+        {
+          "period": 1,
+          "shock_SMAR": 247.64,
+          "lower_SMAR": 139.77,
+          "upper_SMAR": 297.62,
+          "shock_AALI": 79.5,
+          "lower_AALI": 10.04,
+          "upper_AALI": 145.43,
+          "shock_SIMP": 140.69,
+          "lower_SIMP": 86.78,
+          "upper_SIMP": 191.9
+        },
+        {
+          "period": 2,
+          "shock_SMAR": 202.45,
+          "lower_SMAR": 73.57,
+          "upper_SMAR": 246.8,
+          "shock_AALI": 63.14,
+          "lower_AALI": -28.82,
+          "upper_AALI": 136.64,
+          "shock_SIMP": 91.62,
+          "lower_SIMP": 7.38,
+          "upper_SIMP": 162.03
+        },
+        {
+          "period": 3,
+          "shock_SMAR": 120.45,
+          "lower_SMAR": 12.5,
+          "upper_SMAR": 201.3,
+          "shock_AALI": -7.93,
+          "lower_AALI": -88.32,
+          "upper_AALI": 96.59,
+          "shock_SIMP": 107.42,
+          "lower_SIMP": 32.8,
+          "upper_SIMP": 177.53
+        },
+        {
+          "period": 4,
+          "shock_SMAR": 60.92,
+          "lower_SMAR": -27.36,
+          "upper_SMAR": 156.78,
+          "shock_AALI": 60.83,
+          "lower_AALI": -29.07,
+          "upper_AALI": 142.2,
+          "shock_SIMP": 159.81,
+          "lower_SIMP": 65.39,
+          "upper_SIMP": 246.14
+        },
+        {
+          "period": 5,
+          "shock_SMAR": 59.82,
+          "lower_SMAR": -11.99,
+          "upper_SMAR": 135.32,
+          "shock_AALI": 27.4,
+          "lower_AALI": -53.55,
+          "upper_AALI": 102.37,
+          "shock_SIMP": 225.82,
+          "lower_SIMP": 124.86,
+          "upper_SIMP": 326.45
+        },
+        {
+          "period": 6,
+          "shock_SMAR": 59.03,
+          "lower_SMAR": -31.77,
+          "upper_SMAR": 143.78,
+          "shock_AALI": 63.19,
+          "lower_AALI": -28.5,
+          "upper_AALI": 131.39,
+          "shock_SIMP": 257.49,
+          "lower_SIMP": 143.24,
+          "upper_SIMP": 355.75
+        },
+        {
+          "period": 7,
+          "shock_SMAR": 79,
+          "lower_SMAR": -28.86,
+          "upper_SMAR": 165.3,
+          "shock_AALI": 78.5,
+          "lower_AALI": -31.93,
+          "upper_AALI": 167.53,
+          "shock_SIMP": 295.21,
+          "lower_SIMP": 170.56,
+          "upper_SIMP": 400.59
+        },
+        {
+          "period": 8,
+          "shock_SMAR": 81.32,
+          "lower_SMAR": -40.36,
+          "upper_SMAR": 178.48,
+          "shock_AALI": 72.57,
+          "lower_AALI": -35.28,
+          "upper_AALI": 166.05,
+          "shock_SIMP": 301.67,
+          "lower_SIMP": 166.94,
+          "upper_SIMP": 409.7
+        },
+        {
+          "period": 9,
+          "shock_SMAR": 100.22,
+          "lower_SMAR": -26.7,
+          "upper_SMAR": 203.61,
+          "shock_AALI": 63,
+          "lower_AALI": -64.64,
+          "upper_AALI": 170.17,
+          "shock_SIMP": 307.9,
+          "lower_SIMP": 165.91,
+          "upper_SIMP": 412.7
+        },
+        {
+          "period": 10,
+          "shock_SMAR": 91.22,
+          "lower_SMAR": -35.04,
+          "upper_SMAR": 181.3,
+          "shock_AALI": 62.08,
+          "lower_AALI": -67.99,
+          "upper_AALI": 175.87,
+          "shock_SIMP": 312.41,
+          "lower_SIMP": 160.59,
+          "upper_SIMP": 412.15
+        },
+        {
+          "period": 11,
+          "shock_SMAR": 86.86,
+          "lower_SMAR": -50.64,
+          "upper_SMAR": 186.34,
+          "shock_AALI": 56.24,
+          "lower_AALI": -81.48,
+          "upper_AALI": 183.33,
+          "shock_SIMP": 312.87,
+          "lower_SIMP": 151.06,
+          "upper_SIMP": 420.65
+        },
+        {
+          "period": 12,
+          "shock_SMAR": 81.33,
+          "lower_SMAR": -61.91,
+          "upper_SMAR": 185.81,
+          "shock_AALI": 54.37,
+          "lower_AALI": -82.32,
+          "upper_AALI": 182.38,
+          "shock_SIMP": 317.33,
+          "lower_SIMP": 161.85,
+          "upper_SIMP": 428.24
+        }
+      ],
+      "AALI": [
+        {
+          "period": 0,
+          "shock_SMAR": 206.29,
+          "lower_SMAR": -112.43,
+          "upper_SMAR": 485.18,
+          "shock_AALI": 1318.26,
+          "lower_AALI": 1061.49,
+          "upper_AALI": 1407.88,
+          "shock_SIMP": 0,
+          "lower_SIMP": 0,
+          "upper_SIMP": 0
+        },
+        {
+          "period": 1,
+          "shock_SMAR": -80.02,
+          "lower_SMAR": -438.59,
+          "upper_SMAR": 269.83,
+          "shock_AALI": 1243.56,
+          "lower_AALI": 823.23,
+          "upper_AALI": 1452.33,
+          "shock_SIMP": 361.52,
+          "lower_SIMP": 140.57,
+          "upper_SIMP": 549.25
+        },
+        {
+          "period": 2,
+          "shock_SMAR": 148.57,
+          "lower_SMAR": -173.77,
+          "upper_SMAR": 643.72,
+          "shock_AALI": 1070.49,
+          "lower_AALI": 630.73,
+          "upper_AALI": 1286.26,
+          "shock_SIMP": 154.41,
+          "lower_SIMP": -165.93,
+          "upper_SIMP": 355.31
+        },
+        {
+          "period": 3,
+          "shock_SMAR": 163.55,
+          "lower_SMAR": -198.35,
+          "upper_SMAR": 648.79,
+          "shock_AALI": 1057.18,
+          "lower_AALI": 609.05,
+          "upper_AALI": 1300.27,
+          "shock_SIMP": 255.39,
+          "lower_SIMP": -135.86,
+          "upper_SIMP": 531.43
+        },
+        {
+          "period": 4,
+          "shock_SMAR": -14,
+          "lower_SMAR": -439.53,
+          "upper_SMAR": 502.88,
+          "shock_AALI": 1123.32,
+          "lower_AALI": 691.48,
+          "upper_AALI": 1451.47,
+          "shock_SIMP": 92.66,
+          "lower_SIMP": -332.27,
+          "upper_SIMP": 431.83
+        },
+        {
+          "period": 5,
+          "shock_SMAR": 143.22,
+          "lower_SMAR": -297.95,
+          "upper_SMAR": 614.15,
+          "shock_AALI": 896.01,
+          "lower_AALI": 546.46,
+          "upper_AALI": 1249.67,
+          "shock_SIMP": 10.35,
+          "lower_SIMP": -395.16,
+          "upper_SIMP": 361.7
+        },
+        {
+          "period": 6,
+          "shock_SMAR": 108.18,
+          "lower_SMAR": -270.58,
+          "upper_SMAR": 543.58,
+          "shock_AALI": 1004.73,
+          "lower_AALI": 679.12,
+          "upper_AALI": 1279.46,
+          "shock_SIMP": 40.77,
+          "lower_SIMP": -423.88,
+          "upper_SIMP": 354.1
+        },
+        {
+          "period": 7,
+          "shock_SMAR": 97.29,
+          "lower_SMAR": -319.18,
+          "upper_SMAR": 580.99,
+          "shock_AALI": 1008.97,
+          "lower_AALI": 652.85,
+          "upper_AALI": 1291.54,
+          "shock_SIMP": 76.33,
+          "lower_SIMP": -344.74,
+          "upper_SIMP": 458.6
+        },
+        {
+          "period": 8,
+          "shock_SMAR": 60.42,
+          "lower_SMAR": -378.46,
+          "upper_SMAR": 558.83,
+          "shock_AALI": 990.27,
+          "lower_AALI": 612.37,
+          "upper_AALI": 1293.22,
+          "shock_SIMP": 33.11,
+          "lower_SIMP": -436.17,
+          "upper_SIMP": 407.81
+        },
+        {
+          "period": 9,
+          "shock_SMAR": 74.48,
+          "lower_SMAR": -375,
+          "upper_SMAR": 578.16,
+          "shock_AALI": 1025.38,
+          "lower_AALI": 647.52,
+          "upper_AALI": 1276.6,
+          "shock_SIMP": 50.37,
+          "lower_SIMP": -430.61,
+          "upper_SIMP": 456.68
+        },
+        {
+          "period": 10,
+          "shock_SMAR": 62.02,
+          "lower_SMAR": -359.39,
+          "upper_SMAR": 556.27,
+          "shock_AALI": 1021.5,
+          "lower_AALI": 654.28,
+          "upper_AALI": 1293.69,
+          "shock_SIMP": 64.68,
+          "lower_SIMP": -444.76,
+          "upper_SIMP": 465.55
+        },
+        {
+          "period": 11,
+          "shock_SMAR": 82.22,
+          "lower_SMAR": -372.78,
+          "upper_SMAR": 571.24,
+          "shock_AALI": 1010.27,
+          "lower_AALI": 624.24,
+          "upper_AALI": 1287.35,
+          "shock_SIMP": 58.51,
+          "lower_SIMP": -448.79,
+          "upper_SIMP": 493.17
+        },
+        {
+          "period": 12,
+          "shock_SMAR": 84.5,
+          "lower_SMAR": -384.66,
+          "upper_SMAR": 552.63,
+          "shock_AALI": 1020.22,
+          "lower_AALI": 629.25,
+          "upper_AALI": 1290.62,
+          "shock_SIMP": 58.24,
+          "lower_SIMP": -427.82,
+          "upper_SIMP": 504.05
+        }
+      ],
+      "SIMP": [
+        {
+          "period": 0,
+          "shock_SMAR": 8.59,
+          "lower_SMAR": 0.07,
+          "upper_SMAR": 14.45,
+          "shock_AALI": 19.95,
+          "lower_AALI": 13.15,
+          "upper_AALI": 24.46,
+          "shock_SIMP": 33.5,
+          "lower_SIMP": 26.47,
+          "upper_SIMP": 37.38
+        },
+        {
+          "period": 1,
+          "shock_SMAR": -4.84,
+          "lower_SMAR": -16.03,
+          "upper_SMAR": 3.95,
+          "shock_AALI": 28.22,
+          "lower_AALI": 14.76,
+          "upper_AALI": 37.19,
+          "shock_SIMP": 46.24,
+          "lower_SIMP": 32.03,
+          "upper_SIMP": 53.37
+        },
+        {
+          "period": 2,
+          "shock_SMAR": -1.57,
+          "lower_SMAR": -13.18,
+          "upper_SMAR": 12.16,
+          "shock_AALI": 25.59,
+          "lower_AALI": 10.25,
+          "upper_AALI": 35.59,
+          "shock_SIMP": 41.06,
+          "lower_SIMP": 23.17,
+          "upper_SIMP": 49.5
+        },
+        {
+          "period": 3,
+          "shock_SMAR": 3.84,
+          "lower_SMAR": -9.33,
+          "upper_SMAR": 18.54,
+          "shock_AALI": 26.23,
+          "lower_AALI": 9.09,
+          "upper_AALI": 36.21,
+          "shock_SIMP": 40.17,
+          "lower_SIMP": 19.21,
+          "upper_SIMP": 48.01
+        },
+        {
+          "period": 4,
+          "shock_SMAR": 9.84,
+          "lower_SMAR": -6.59,
+          "upper_SMAR": 24.85,
+          "shock_AALI": 22.62,
+          "lower_AALI": 4.75,
+          "upper_AALI": 35.54,
+          "shock_SIMP": 40.51,
+          "lower_SIMP": 17.98,
+          "upper_SIMP": 51.18
+        },
+        {
+          "period": 5,
+          "shock_SMAR": 13.63,
+          "lower_SMAR": -1.14,
+          "upper_SMAR": 26.36,
+          "shock_AALI": 18.37,
+          "lower_AALI": -0.29,
+          "upper_AALI": 32.94,
+          "shock_SIMP": 37.41,
+          "lower_SIMP": 13.53,
+          "upper_SIMP": 47.49
+        },
+        {
+          "period": 6,
+          "shock_SMAR": 11.76,
+          "lower_SMAR": -4.28,
+          "upper_SMAR": 24.01,
+          "shock_AALI": 19.68,
+          "lower_AALI": 2.96,
+          "upper_AALI": 32.8,
+          "shock_SIMP": 34.75,
+          "lower_SIMP": 10.47,
+          "upper_SIMP": 44.64
+        },
+        {
+          "period": 7,
+          "shock_SMAR": 9.29,
+          "lower_SMAR": -7.97,
+          "upper_SMAR": 21.27,
+          "shock_AALI": 18.88,
+          "lower_AALI": 1.53,
+          "upper_AALI": 31.57,
+          "shock_SIMP": 32.97,
+          "lower_SIMP": 9.89,
+          "upper_SIMP": 44.89
+        },
+        {
+          "period": 8,
+          "shock_SMAR": 8.39,
+          "lower_SMAR": -7.96,
+          "upper_SMAR": 19.99,
+          "shock_AALI": 17.88,
+          "lower_AALI": 0.57,
+          "upper_AALI": 29.36,
+          "shock_SIMP": 32.91,
+          "lower_SIMP": 9.67,
+          "upper_SIMP": 45.71
+        },
+        {
+          "period": 9,
+          "shock_SMAR": 7.58,
+          "lower_SMAR": -8.23,
+          "upper_SMAR": 18.6,
+          "shock_AALI": 19.24,
+          "lower_AALI": 2.2,
+          "upper_AALI": 29.97,
+          "shock_SIMP": 34.38,
+          "lower_SIMP": 9.39,
+          "upper_SIMP": 48.46
+        },
+        {
+          "period": 10,
+          "shock_SMAR": 6.89,
+          "lower_SMAR": -9.51,
+          "upper_SMAR": 18.1,
+          "shock_AALI": 20.04,
+          "lower_AALI": 2.98,
+          "upper_AALI": 32.04,
+          "shock_SIMP": 35.06,
+          "lower_SIMP": 10.41,
+          "upper_SIMP": 51.55
+        },
+        {
+          "period": 11,
+          "shock_SMAR": 7.47,
+          "lower_SMAR": -9.62,
+          "upper_SMAR": 18.82,
+          "shock_AALI": 20.18,
+          "lower_AALI": 3.85,
+          "upper_AALI": 32.13,
+          "shock_SIMP": 35.07,
+          "lower_SIMP": 10.53,
+          "upper_SIMP": 51.16
+        },
+        {
+          "period": 12,
+          "shock_SMAR": 8.23,
+          "lower_SMAR": -8.91,
+          "upper_SMAR": 18.58,
+          "shock_AALI": 20.39,
+          "lower_AALI": 3.8,
+          "upper_AALI": 31.4,
+          "shock_SIMP": 35.32,
+          "lower_SIMP": 11.18,
+          "upper_SIMP": 51.19
+        }
+      ]
+    },
+    "fevd": {
+      "SMAR": [
+        {
+          "period": 1,
+          "SMAR": 100,
+          "AALI": 0,
+          "SIMP": 0
+        },
+        {
+          "period": 2,
+          "SMAR": 88.77,
+          "AALI": 2.72,
+          "SIMP": 8.51
+        },
+        {
+          "period": 3,
+          "SMAR": 86.54,
+          "AALI": 3.6,
+          "SIMP": 9.86
+        },
+        {
+          "period": 4,
+          "SMAR": 83.95,
+          "AALI": 3.32,
+          "SIMP": 12.73
+        },
+        {
+          "period": 5,
+          "SMAR": 77.01,
+          "AALI": 4.08,
+          "SIMP": 18.92
+        },
+        {
+          "period": 6,
+          "SMAR": 67.26,
+          "AALI": 3.7,
+          "SIMP": 29.04
+        },
+        {
+          "period": 7,
+          "SMAR": 57.53,
+          "AALI": 3.97,
+          "SIMP": 38.51
+        },
+        {
+          "period": 8,
+          "SMAR": 48.63,
+          "AALI": 4.35,
+          "SIMP": 47.01
+        },
+        {
+          "period": 9,
+          "SMAR": 42.21,
+          "AALI": 4.47,
+          "SIMP": 53.32
+        },
+        {
+          "period": 10,
+          "SMAR": 37.64,
+          "AALI": 4.36,
+          "SIMP": 58
+        },
+        {
+          "period": 11,
+          "SMAR": 33.96,
+          "AALI": 4.25,
+          "SIMP": 61.79
+        },
+        {
+          "period": 12,
+          "SMAR": 31.04,
+          "AALI": 4.11,
+          "SIMP": 64.86
+        }
+      ],
+      "AALI": [
+        {
+          "period": 1,
+          "SMAR": 2.39,
+          "AALI": 97.61,
+          "SIMP": 0
+        },
+        {
+          "period": 2,
+          "SMAR": 1.41,
+          "AALI": 94.81,
+          "SIMP": 3.77
+        },
+        {
+          "period": 3,
+          "SMAR": 1.53,
+          "AALI": 95.16,
+          "SIMP": 3.32
+        },
+        {
+          "period": 4,
+          "SMAR": 1.67,
+          "AALI": 94.59,
+          "SIMP": 3.75
+        },
+        {
+          "period": 5,
+          "SMAR": 1.37,
+          "AALI": 95.43,
+          "SIMP": 3.2
+        },
+        {
+          "period": 6,
+          "SMAR": 1.49,
+          "AALI": 95.64,
+          "SIMP": 2.87
+        },
+        {
+          "period": 7,
+          "SMAR": 1.45,
+          "AALI": 95.99,
+          "SIMP": 2.56
+        },
+        {
+          "period": 8,
+          "SMAR": 1.39,
+          "AALI": 96.25,
+          "SIMP": 2.36
+        },
+        {
+          "period": 9,
+          "SMAR": 1.3,
+          "AALI": 96.54,
+          "SIMP": 2.15
+        },
+        {
+          "period": 10,
+          "SMAR": 1.23,
+          "AALI": 96.78,
+          "SIMP": 1.99
+        },
+        {
+          "period": 11,
+          "SMAR": 1.16,
+          "AALI": 96.98,
+          "SIMP": 1.86
+        },
+        {
+          "period": 12,
+          "SMAR": 1.13,
+          "AALI": 97.12,
+          "SIMP": 1.75
+        }
+      ],
+      "SIMP": [
+        {
+          "period": 1,
+          "SMAR": 4.63,
+          "AALI": 24.97,
+          "SIMP": 70.4
+        },
+        {
+          "period": 2,
+          "SMAR": 2.14,
+          "AALI": 26.23,
+          "SIMP": 71.63
+        },
+        {
+          "period": 3,
+          "SMAR": 1.45,
+          "AALI": 26.81,
+          "SIMP": 71.74
+        },
+        {
+          "period": 4,
+          "SMAR": 1.24,
+          "AALI": 27.54,
+          "SIMP": 71.22
+        },
+        {
+          "period": 5,
+          "SMAR": 1.84,
+          "AALI": 26.6,
+          "SIMP": 71.56
+        },
+        {
+          "period": 6,
+          "SMAR": 2.97,
+          "AALI": 25.3,
+          "SIMP": 71.74
+        },
+        {
+          "period": 7,
+          "SMAR": 3.54,
+          "AALI": 24.96,
+          "SIMP": 71.5
+        },
+        {
+          "period": 8,
+          "SMAR": 3.74,
+          "AALI": 24.81,
+          "SIMP": 71.46
+        },
+        {
+          "period": 9,
+          "SMAR": 3.82,
+          "AALI": 24.55,
+          "SIMP": 71.63
+        },
+        {
+          "period": 10,
+          "SMAR": 3.8,
+          "AALI": 24.43,
+          "SIMP": 71.77
+        },
+        {
+          "period": 11,
+          "SMAR": 3.72,
+          "AALI": 24.39,
+          "SIMP": 71.89
+        },
+        {
+          "period": 12,
+          "SMAR": 3.69,
+          "AALI": 24.36,
+          "SIMP": 71.94
+        }
+      ]
+    },
+    "key_findings": {
+      "smar": "Variabilitas SMAR awalnya 100% dipengaruhi guncangan internal, namun dalam jangka panjang (periode ke-12) pengaruh SIMP melonjak hingga 64.85%, menunjukkan SMAR sangat rentan terhadap dinamika SIMP.",
+      "aali": "AALI memiliki tingkat independensi yang sangat tinggi (97.12% variabilitas masih ditentukan oleh guncangan internal pada periode ke-12). Pengaruh dari SMAR dan SIMP sangat kecil (< 2%).",
+      "simp": "SIMP berperan sebagai price leader dominan yang memengaruhi harga saham lainnya secara signifikan (Granger causality dua arah dengan SMAR, dan satu arah memengaruhi AALI)."
+    }
+  },
+  "forecasting": {
+    "horizon": 12,
+    "forecasts": {
+      "SMAR": [
+        {
+          "period": 1,
+          "date": "2024-01",
+          "forecast": 3934.65,
+          "lower_95": 3187.91,
+          "upper_95": 4681.39,
+          "actual": 3800,
+          "error": -134.65,
+          "ape": 3.543
+        },
+        {
+          "period": 2,
+          "date": "2024-02",
+          "forecast": 3978.04,
+          "lower_95": 3032.78,
+          "upper_95": 4923.3,
+          "actual": 3820,
+          "error": -158.04,
+          "ape": 4.137
+        },
+        {
+          "period": 3,
+          "date": "2024-03",
+          "forecast": 4122.95,
+          "lower_95": 3074.85,
+          "upper_95": 5171.06,
+          "actual": 3770,
+          "error": -352.95,
+          "ape": 9.362
+        },
+        {
+          "period": 4,
+          "date": "2024-04",
+          "forecast": 4030.67,
+          "lower_95": 2935.76,
+          "upper_95": 5125.58,
+          "actual": 3800,
+          "error": -230.67,
+          "ape": 6.07
+        },
+        {
+          "period": 5,
+          "date": "2024-05",
+          "forecast": 4028.29,
+          "lower_95": 2877.03,
+          "upper_95": 5179.56,
+          "actual": 3620,
+          "error": -408.29,
+          "ape": 11.279
+        },
+        {
+          "period": 6,
+          "date": "2024-06",
+          "forecast": 3985.34,
+          "lower_95": 2745.2,
+          "upper_95": 5225.48,
+          "actual": 3370,
+          "error": -615.34,
+          "ape": 18.259
+        },
+        {
+          "period": 7,
+          "date": "2024-07",
+          "forecast": 3943.31,
+          "lower_95": 2593.73,
+          "upper_95": 5292.89,
+          "actual": 3400,
+          "error": -543.31,
+          "ape": 15.98
+        },
+        {
+          "period": 8,
+          "date": "2024-08",
+          "forecast": 3920.26,
+          "lower_95": 2435.74,
+          "upper_95": 5404.78,
+          "actual": 3770,
+          "error": -150.26,
+          "ape": 3.986
+        },
+        {
+          "period": 9,
+          "date": "2024-09",
+          "forecast": 3929.87,
+          "lower_95": 2317.72,
+          "upper_95": 5542.02,
+          "actual": 3920,
+          "error": -9.87,
+          "ape": 0.252
+        },
+        {
+          "period": 10,
+          "date": "2024-10",
+          "forecast": 3928.7,
+          "lower_95": 2191.74,
+          "upper_95": 5665.66,
+          "actual": 4180,
+          "error": 251.3,
+          "ape": 6.012
+        },
+        {
+          "period": 11,
+          "date": "2024-11",
+          "forecast": 3933.54,
+          "lower_95": 2079.16,
+          "upper_95": 5787.92,
+          "actual": 3930,
+          "error": -3.54,
+          "ape": 0.09
+        },
+        {
+          "period": 12,
+          "date": "2024-12",
+          "forecast": 3939.6,
+          "lower_95": 1975.95,
+          "upper_95": 5903.24,
+          "actual": 3650,
+          "error": -289.6,
+          "ape": 7.934
+        }
+      ],
+      "AALI": [
+        {
+          "period": 1,
+          "date": "2024-01",
+          "forecast": 6547.63,
+          "lower_95": 3932.45,
+          "upper_95": 9162.81,
+          "actual": 6900,
+          "error": 352.37,
+          "ape": 5.107
+        },
+        {
+          "period": 2,
+          "date": "2024-02",
+          "forecast": 6819.34,
+          "lower_95": 3171.54,
+          "upper_95": 10467.13,
+          "actual": 6725,
+          "error": -94.34,
+          "ape": 1.403
+        },
+        {
+          "period": 3,
+          "date": "2024-03",
+          "forecast": 7010.91,
+          "lower_95": 2781.85,
+          "upper_95": 11239.97,
+          "actual": 6900,
+          "error": -110.91,
+          "ape": 1.607
+        },
+        {
+          "period": 4,
+          "date": "2024-04",
+          "forecast": 6732.27,
+          "lower_95": 1985.53,
+          "upper_95": 11479.01,
+          "actual": 6500,
+          "error": -232.27,
+          "ape": 3.573
+        },
+        {
+          "period": 5,
+          "date": "2024-05",
+          "forecast": 6994.53,
+          "lower_95": 1758.83,
+          "upper_95": 12230.24,
+          "actual": 5875,
+          "error": -1119.53,
+          "ape": 19.056
+        },
+        {
+          "period": 6,
+          "date": "2024-06",
+          "forecast": 6958.64,
+          "lower_95": 1429.09,
+          "upper_95": 12488.19,
+          "actual": 5400,
+          "error": -1558.64,
+          "ape": 28.864
+        },
+        {
+          "period": 7,
+          "date": "2024-07",
+          "forecast": 6934.64,
+          "lower_95": 1060.54,
+          "upper_95": 12808.75,
+          "actual": 6025,
+          "error": -909.64,
+          "ape": 15.098
+        },
+        {
+          "period": 8,
+          "date": "2024-08",
+          "forecast": 6987.25,
+          "lower_95": 784.47,
+          "upper_95": 13190.04,
+          "actual": 6050,
+          "error": -937.25,
+          "ape": 15.492
+        },
+        {
+          "period": 9,
+          "date": "2024-09",
+          "forecast": 6966.68,
+          "lower_95": 465.92,
+          "upper_95": 13467.44,
+          "actual": 6600,
+          "error": -366.68,
+          "ape": 5.556
+        },
+        {
+          "period": 10,
+          "date": "2024-10",
+          "forecast": 6935.15,
+          "lower_95": 128.55,
+          "upper_95": 13741.75,
+          "actual": 6775,
+          "error": -160.15,
+          "ape": 2.364
+        },
+        {
+          "period": 11,
+          "date": "2024-11",
+          "forecast": 6950,
+          "lower_95": -147.11,
+          "upper_95": 14047.12,
+          "actual": 6200,
+          "error": -750,
+          "ape": 12.097
+        },
+        {
+          "period": 12,
+          "date": "2024-12",
+          "forecast": 6947.29,
+          "lower_95": -423.52,
+          "upper_95": 14318.11,
+          "actual": 6200,
+          "error": -747.29,
+          "ape": 12.053
+        }
+      ],
+      "SIMP": [
+        {
+          "period": 1,
+          "date": "2024-01",
+          "forecast": 360.9,
+          "lower_95": 282.64,
+          "upper_95": 439.16,
+          "actual": 366,
+          "error": 5.1,
+          "ape": 1.393
+        },
+        {
+          "period": 2,
+          "date": "2024-02",
+          "forecast": 360.22,
+          "lower_95": 227.99,
+          "upper_95": 492.46,
+          "actual": 360,
+          "error": -0.22,
+          "ape": 0.061
+        },
+        {
+          "period": 3,
+          "date": "2024-03",
+          "forecast": 353.21,
+          "lower_95": 190.46,
+          "upper_95": 515.96,
+          "actual": 382,
+          "error": 28.79,
+          "ape": 7.537
+        },
+        {
+          "period": 4,
+          "date": "2024-04",
+          "forecast": 348.54,
+          "lower_95": 160.43,
+          "upper_95": 536.64,
+          "actual": 362,
+          "error": 13.46,
+          "ape": 3.718
+        },
+        {
+          "period": 5,
+          "date": "2024-05",
+          "forecast": 355.54,
+          "lower_95": 145.71,
+          "upper_95": 565.36,
+          "actual": 372,
+          "error": 16.46,
+          "ape": 4.425
+        },
+        {
+          "period": 6,
+          "date": "2024-06",
+          "forecast": 357.95,
+          "lower_95": 131.21,
+          "upper_95": 584.7,
+          "actual": 362,
+          "error": 4.05,
+          "ape": 1.119
+        },
+        {
+          "period": 7,
+          "date": "2024-07",
+          "forecast": 359.15,
+          "lower_95": 118.18,
+          "upper_95": 600.13,
+          "actual": 392,
+          "error": 32.85,
+          "ape": 8.38
+        },
+        {
+          "period": 8,
+          "date": "2024-08",
+          "forecast": 361.67,
+          "lower_95": 108.79,
+          "upper_95": 614.55,
+          "actual": 384,
+          "error": 22.33,
+          "ape": 5.815
+        },
+        {
+          "period": 9,
+          "date": "2024-09",
+          "forecast": 361.37,
+          "lower_95": 97.54,
+          "upper_95": 625.2,
+          "actual": 398,
+          "error": 36.63,
+          "ape": 9.204
+        },
+        {
+          "period": 10,
+          "date": "2024-10",
+          "forecast": 359.93,
+          "lower_95": 84.64,
+          "upper_95": 635.23,
+          "actual": 424,
+          "error": 64.07,
+          "ape": 15.111
+        },
+        {
+          "period": 11,
+          "date": "2024-11",
+          "forecast": 359.27,
+          "lower_95": 72.5,
+          "upper_95": 646.04,
+          "actual": 394,
+          "error": 34.73,
+          "ape": 8.815
+        },
+        {
+          "period": 12,
+          "date": "2024-12",
+          "forecast": 358.55,
+          "lower_95": 60.67,
+          "upper_95": 656.44,
+          "actual": 378,
+          "error": 19.45,
+          "ape": 5.146
+        }
+      ]
+    },
+    "has_evaluation": true,
+    "evaluation": {
+      "SMAR": {
+        "variable": "SMAR",
+        "mape": 7.242,
+        "rmse": 320.3,
+        "mae": 262.32,
+        "n_periods": 12,
+        "accuracy_category": "Sangat Akurat (< 10%)"
+      },
+      "AALI": {
+        "variable": "AALI",
+        "mape": 10.189,
+        "rmse": 756.58,
+        "mae": 611.59,
+        "n_periods": 12,
+        "accuracy_category": "Baik (10% - 20%)"
+      },
+      "SIMP": {
+        "variable": "SIMP",
+        "mape": 5.894,
+        "rmse": 28.77,
+        "mae": 23.18,
+        "n_periods": 12,
+        "accuracy_category": "Sangat Akurat (< 10%)"
+      }
+    },
+    "overall_mape": 7.775,
+    "overall_accuracy_category": "Sangat Akurat (Very Accurate)",
+    "interpretation": "Nilai rata-rata Mean Absolute Percentage Error (Overall MAPE) model adalah 7.775%. Berdasarkan kriteria Lewis (1982), model VECM tergolong dalam kategori 'Sangat Akurat (Very Accurate)', membuktikan keakuratan prediksi harga saham yang sangat andal."
+  },
+  "forecasting_horizons": {
+    "h_3": {
+      "horizon": 3,
+      "forecasts": {
+        "SMAR": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 3934.65,
+            "lower_95": 3187.91,
+            "upper_95": 4681.39,
+            "actual": 3800,
+            "error": -134.65,
+            "ape": 3.543
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 3978.04,
+            "lower_95": 3032.78,
+            "upper_95": 4923.3,
+            "actual": 3820,
+            "error": -158.04,
+            "ape": 4.137
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 4122.95,
+            "lower_95": 3074.85,
+            "upper_95": 5171.06,
+            "actual": 3770,
+            "error": -352.95,
+            "ape": 9.362
+          }
+        ],
+        "AALI": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 6547.63,
+            "lower_95": 3932.45,
+            "upper_95": 9162.81,
+            "actual": 6900,
+            "error": 352.37,
+            "ape": 5.107
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 6819.34,
+            "lower_95": 3171.54,
+            "upper_95": 10467.13,
+            "actual": 6725,
+            "error": -94.34,
+            "ape": 1.403
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 7010.91,
+            "lower_95": 2781.85,
+            "upper_95": 11239.97,
+            "actual": 6900,
+            "error": -110.91,
+            "ape": 1.607
+          }
+        ],
+        "SIMP": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 360.9,
+            "lower_95": 282.64,
+            "upper_95": 439.16,
+            "actual": 366,
+            "error": 5.1,
+            "ape": 1.393
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 360.22,
+            "lower_95": 227.99,
+            "upper_95": 492.46,
+            "actual": 360,
+            "error": -0.22,
+            "ape": 0.061
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 353.21,
+            "lower_95": 190.46,
+            "upper_95": 515.96,
+            "actual": 382,
+            "error": 28.79,
+            "ape": 7.537
+          }
+        ]
+      },
+      "has_evaluation": true,
+      "evaluation": {
+        "SMAR": {
+          "variable": "SMAR",
+          "mape": 5.681,
+          "rmse": 236.42,
+          "mae": 215.22,
+          "n_periods": 3,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "AALI": {
+          "variable": "AALI",
+          "mape": 2.706,
+          "rmse": 220.13,
+          "mae": 185.87,
+          "n_periods": 3,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "SIMP": {
+          "variable": "SIMP",
+          "mape": 2.997,
+          "rmse": 16.88,
+          "mae": 11.37,
+          "n_periods": 3,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        }
+      },
+      "overall_mape": 3.795,
+      "overall_accuracy_category": "Sangat Akurat (Very Accurate)",
+      "interpretation": "Nilai rata-rata Mean Absolute Percentage Error (Overall MAPE) model adalah 3.795%. Berdasarkan kriteria Lewis (1982), model VECM tergolong dalam kategori 'Sangat Akurat (Very Accurate)', membuktikan keakuratan prediksi harga saham yang sangat andal."
+    },
+    "h_6": {
+      "horizon": 6,
+      "forecasts": {
+        "SMAR": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 3934.65,
+            "lower_95": 3187.91,
+            "upper_95": 4681.39,
+            "actual": 3800,
+            "error": -134.65,
+            "ape": 3.543
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 3978.04,
+            "lower_95": 3032.78,
+            "upper_95": 4923.3,
+            "actual": 3820,
+            "error": -158.04,
+            "ape": 4.137
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 4122.95,
+            "lower_95": 3074.85,
+            "upper_95": 5171.06,
+            "actual": 3770,
+            "error": -352.95,
+            "ape": 9.362
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 4030.67,
+            "lower_95": 2935.76,
+            "upper_95": 5125.58,
+            "actual": 3800,
+            "error": -230.67,
+            "ape": 6.07
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 4028.29,
+            "lower_95": 2877.03,
+            "upper_95": 5179.56,
+            "actual": 3620,
+            "error": -408.29,
+            "ape": 11.279
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 3985.34,
+            "lower_95": 2745.2,
+            "upper_95": 5225.48,
+            "actual": 3370,
+            "error": -615.34,
+            "ape": 18.259
+          }
+        ],
+        "AALI": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 6547.63,
+            "lower_95": 3932.45,
+            "upper_95": 9162.81,
+            "actual": 6900,
+            "error": 352.37,
+            "ape": 5.107
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 6819.34,
+            "lower_95": 3171.54,
+            "upper_95": 10467.13,
+            "actual": 6725,
+            "error": -94.34,
+            "ape": 1.403
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 7010.91,
+            "lower_95": 2781.85,
+            "upper_95": 11239.97,
+            "actual": 6900,
+            "error": -110.91,
+            "ape": 1.607
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 6732.27,
+            "lower_95": 1985.53,
+            "upper_95": 11479.01,
+            "actual": 6500,
+            "error": -232.27,
+            "ape": 3.573
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 6994.53,
+            "lower_95": 1758.83,
+            "upper_95": 12230.24,
+            "actual": 5875,
+            "error": -1119.53,
+            "ape": 19.056
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 6958.64,
+            "lower_95": 1429.09,
+            "upper_95": 12488.19,
+            "actual": 5400,
+            "error": -1558.64,
+            "ape": 28.864
+          }
+        ],
+        "SIMP": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 360.9,
+            "lower_95": 282.64,
+            "upper_95": 439.16,
+            "actual": 366,
+            "error": 5.1,
+            "ape": 1.393
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 360.22,
+            "lower_95": 227.99,
+            "upper_95": 492.46,
+            "actual": 360,
+            "error": -0.22,
+            "ape": 0.061
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 353.21,
+            "lower_95": 190.46,
+            "upper_95": 515.96,
+            "actual": 382,
+            "error": 28.79,
+            "ape": 7.537
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 348.54,
+            "lower_95": 160.43,
+            "upper_95": 536.64,
+            "actual": 362,
+            "error": 13.46,
+            "ape": 3.718
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 355.54,
+            "lower_95": 145.71,
+            "upper_95": 565.36,
+            "actual": 372,
+            "error": 16.46,
+            "ape": 4.425
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 357.95,
+            "lower_95": 131.21,
+            "upper_95": 584.7,
+            "actual": 362,
+            "error": 4.05,
+            "ape": 1.119
+          }
+        ]
+      },
+      "has_evaluation": true,
+      "evaluation": {
+        "SMAR": {
+          "variable": "SMAR",
+          "mape": 8.775,
+          "rmse": 357.36,
+          "mae": 316.66,
+          "n_periods": 6,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "AALI": {
+          "variable": "AALI",
+          "mape": 9.935,
+          "rmse": 804.37,
+          "mae": 578.01,
+          "n_periods": 6,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "SIMP": {
+          "variable": "SIMP",
+          "mape": 3.042,
+          "rmse": 14.85,
+          "mae": 11.35,
+          "n_periods": 6,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        }
+      },
+      "overall_mape": 7.251,
+      "overall_accuracy_category": "Sangat Akurat (Very Accurate)",
+      "interpretation": "Nilai rata-rata Mean Absolute Percentage Error (Overall MAPE) model adalah 7.251%. Berdasarkan kriteria Lewis (1982), model VECM tergolong dalam kategori 'Sangat Akurat (Very Accurate)', membuktikan keakuratan prediksi harga saham yang sangat andal."
+    },
+    "h_10": {
+      "horizon": 10,
+      "forecasts": {
+        "SMAR": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 3934.65,
+            "lower_95": 3187.91,
+            "upper_95": 4681.39,
+            "actual": 3800,
+            "error": -134.65,
+            "ape": 3.543
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 3978.04,
+            "lower_95": 3032.78,
+            "upper_95": 4923.3,
+            "actual": 3820,
+            "error": -158.04,
+            "ape": 4.137
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 4122.95,
+            "lower_95": 3074.85,
+            "upper_95": 5171.06,
+            "actual": 3770,
+            "error": -352.95,
+            "ape": 9.362
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 4030.67,
+            "lower_95": 2935.76,
+            "upper_95": 5125.58,
+            "actual": 3800,
+            "error": -230.67,
+            "ape": 6.07
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 4028.29,
+            "lower_95": 2877.03,
+            "upper_95": 5179.56,
+            "actual": 3620,
+            "error": -408.29,
+            "ape": 11.279
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 3985.34,
+            "lower_95": 2745.2,
+            "upper_95": 5225.48,
+            "actual": 3370,
+            "error": -615.34,
+            "ape": 18.259
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 3943.31,
+            "lower_95": 2593.73,
+            "upper_95": 5292.89,
+            "actual": 3400,
+            "error": -543.31,
+            "ape": 15.98
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 3920.26,
+            "lower_95": 2435.74,
+            "upper_95": 5404.78,
+            "actual": 3770,
+            "error": -150.26,
+            "ape": 3.986
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 3929.87,
+            "lower_95": 2317.72,
+            "upper_95": 5542.02,
+            "actual": 3920,
+            "error": -9.87,
+            "ape": 0.252
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 3928.7,
+            "lower_95": 2191.74,
+            "upper_95": 5665.66,
+            "actual": 4180,
+            "error": 251.3,
+            "ape": 6.012
+          }
+        ],
+        "AALI": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 6547.63,
+            "lower_95": 3932.45,
+            "upper_95": 9162.81,
+            "actual": 6900,
+            "error": 352.37,
+            "ape": 5.107
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 6819.34,
+            "lower_95": 3171.54,
+            "upper_95": 10467.13,
+            "actual": 6725,
+            "error": -94.34,
+            "ape": 1.403
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 7010.91,
+            "lower_95": 2781.85,
+            "upper_95": 11239.97,
+            "actual": 6900,
+            "error": -110.91,
+            "ape": 1.607
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 6732.27,
+            "lower_95": 1985.53,
+            "upper_95": 11479.01,
+            "actual": 6500,
+            "error": -232.27,
+            "ape": 3.573
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 6994.53,
+            "lower_95": 1758.83,
+            "upper_95": 12230.24,
+            "actual": 5875,
+            "error": -1119.53,
+            "ape": 19.056
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 6958.64,
+            "lower_95": 1429.09,
+            "upper_95": 12488.19,
+            "actual": 5400,
+            "error": -1558.64,
+            "ape": 28.864
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 6934.64,
+            "lower_95": 1060.54,
+            "upper_95": 12808.75,
+            "actual": 6025,
+            "error": -909.64,
+            "ape": 15.098
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 6987.25,
+            "lower_95": 784.47,
+            "upper_95": 13190.04,
+            "actual": 6050,
+            "error": -937.25,
+            "ape": 15.492
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 6966.68,
+            "lower_95": 465.92,
+            "upper_95": 13467.44,
+            "actual": 6600,
+            "error": -366.68,
+            "ape": 5.556
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 6935.15,
+            "lower_95": 128.55,
+            "upper_95": 13741.75,
+            "actual": 6775,
+            "error": -160.15,
+            "ape": 2.364
+          }
+        ],
+        "SIMP": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 360.9,
+            "lower_95": 282.64,
+            "upper_95": 439.16,
+            "actual": 366,
+            "error": 5.1,
+            "ape": 1.393
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 360.22,
+            "lower_95": 227.99,
+            "upper_95": 492.46,
+            "actual": 360,
+            "error": -0.22,
+            "ape": 0.061
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 353.21,
+            "lower_95": 190.46,
+            "upper_95": 515.96,
+            "actual": 382,
+            "error": 28.79,
+            "ape": 7.537
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 348.54,
+            "lower_95": 160.43,
+            "upper_95": 536.64,
+            "actual": 362,
+            "error": 13.46,
+            "ape": 3.718
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 355.54,
+            "lower_95": 145.71,
+            "upper_95": 565.36,
+            "actual": 372,
+            "error": 16.46,
+            "ape": 4.425
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 357.95,
+            "lower_95": 131.21,
+            "upper_95": 584.7,
+            "actual": 362,
+            "error": 4.05,
+            "ape": 1.119
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 359.15,
+            "lower_95": 118.18,
+            "upper_95": 600.13,
+            "actual": 392,
+            "error": 32.85,
+            "ape": 8.38
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 361.67,
+            "lower_95": 108.79,
+            "upper_95": 614.55,
+            "actual": 384,
+            "error": 22.33,
+            "ape": 5.815
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 361.37,
+            "lower_95": 97.54,
+            "upper_95": 625.2,
+            "actual": 398,
+            "error": 36.63,
+            "ape": 9.204
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 359.93,
+            "lower_95": 84.64,
+            "upper_95": 635.23,
+            "actual": 424,
+            "error": 64.07,
+            "ape": 15.111
+          }
+        ]
+      },
+      "has_evaluation": true,
+      "evaluation": {
+        "SMAR": {
+          "variable": "SMAR",
+          "mape": 7.888,
+          "rmse": 338.71,
+          "mae": 285.47,
+          "n_periods": 10,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "AALI": {
+          "variable": "AALI",
+          "mape": 9.812,
+          "rmse": 758.16,
+          "mae": 584.18,
+          "n_periods": 10,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "SIMP": {
+          "variable": "SIMP",
+          "mape": 5.676,
+          "rmse": 28.89,
+          "mae": 22.4,
+          "n_periods": 10,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        }
+      },
+      "overall_mape": 7.792,
+      "overall_accuracy_category": "Sangat Akurat (Very Accurate)",
+      "interpretation": "Nilai rata-rata Mean Absolute Percentage Error (Overall MAPE) model adalah 7.792%. Berdasarkan kriteria Lewis (1982), model VECM tergolong dalam kategori 'Sangat Akurat (Very Accurate)', membuktikan keakuratan prediksi harga saham yang sangat andal."
+    },
+    "h_12": {
+      "horizon": 12,
+      "forecasts": {
+        "SMAR": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 3934.65,
+            "lower_95": 3187.91,
+            "upper_95": 4681.39,
+            "actual": 3800,
+            "error": -134.65,
+            "ape": 3.543
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 3978.04,
+            "lower_95": 3032.78,
+            "upper_95": 4923.3,
+            "actual": 3820,
+            "error": -158.04,
+            "ape": 4.137
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 4122.95,
+            "lower_95": 3074.85,
+            "upper_95": 5171.06,
+            "actual": 3770,
+            "error": -352.95,
+            "ape": 9.362
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 4030.67,
+            "lower_95": 2935.76,
+            "upper_95": 5125.58,
+            "actual": 3800,
+            "error": -230.67,
+            "ape": 6.07
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 4028.29,
+            "lower_95": 2877.03,
+            "upper_95": 5179.56,
+            "actual": 3620,
+            "error": -408.29,
+            "ape": 11.279
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 3985.34,
+            "lower_95": 2745.2,
+            "upper_95": 5225.48,
+            "actual": 3370,
+            "error": -615.34,
+            "ape": 18.259
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 3943.31,
+            "lower_95": 2593.73,
+            "upper_95": 5292.89,
+            "actual": 3400,
+            "error": -543.31,
+            "ape": 15.98
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 3920.26,
+            "lower_95": 2435.74,
+            "upper_95": 5404.78,
+            "actual": 3770,
+            "error": -150.26,
+            "ape": 3.986
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 3929.87,
+            "lower_95": 2317.72,
+            "upper_95": 5542.02,
+            "actual": 3920,
+            "error": -9.87,
+            "ape": 0.252
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 3928.7,
+            "lower_95": 2191.74,
+            "upper_95": 5665.66,
+            "actual": 4180,
+            "error": 251.3,
+            "ape": 6.012
+          },
+          {
+            "period": 11,
+            "date": "2024-11",
+            "forecast": 3933.54,
+            "lower_95": 2079.16,
+            "upper_95": 5787.92,
+            "actual": 3930,
+            "error": -3.54,
+            "ape": 0.09
+          },
+          {
+            "period": 12,
+            "date": "2024-12",
+            "forecast": 3939.6,
+            "lower_95": 1975.95,
+            "upper_95": 5903.24,
+            "actual": 3650,
+            "error": -289.6,
+            "ape": 7.934
+          }
+        ],
+        "AALI": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 6547.63,
+            "lower_95": 3932.45,
+            "upper_95": 9162.81,
+            "actual": 6900,
+            "error": 352.37,
+            "ape": 5.107
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 6819.34,
+            "lower_95": 3171.54,
+            "upper_95": 10467.13,
+            "actual": 6725,
+            "error": -94.34,
+            "ape": 1.403
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 7010.91,
+            "lower_95": 2781.85,
+            "upper_95": 11239.97,
+            "actual": 6900,
+            "error": -110.91,
+            "ape": 1.607
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 6732.27,
+            "lower_95": 1985.53,
+            "upper_95": 11479.01,
+            "actual": 6500,
+            "error": -232.27,
+            "ape": 3.573
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 6994.53,
+            "lower_95": 1758.83,
+            "upper_95": 12230.24,
+            "actual": 5875,
+            "error": -1119.53,
+            "ape": 19.056
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 6958.64,
+            "lower_95": 1429.09,
+            "upper_95": 12488.19,
+            "actual": 5400,
+            "error": -1558.64,
+            "ape": 28.864
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 6934.64,
+            "lower_95": 1060.54,
+            "upper_95": 12808.75,
+            "actual": 6025,
+            "error": -909.64,
+            "ape": 15.098
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 6987.25,
+            "lower_95": 784.47,
+            "upper_95": 13190.04,
+            "actual": 6050,
+            "error": -937.25,
+            "ape": 15.492
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 6966.68,
+            "lower_95": 465.92,
+            "upper_95": 13467.44,
+            "actual": 6600,
+            "error": -366.68,
+            "ape": 5.556
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 6935.15,
+            "lower_95": 128.55,
+            "upper_95": 13741.75,
+            "actual": 6775,
+            "error": -160.15,
+            "ape": 2.364
+          },
+          {
+            "period": 11,
+            "date": "2024-11",
+            "forecast": 6950,
+            "lower_95": -147.11,
+            "upper_95": 14047.12,
+            "actual": 6200,
+            "error": -750,
+            "ape": 12.097
+          },
+          {
+            "period": 12,
+            "date": "2024-12",
+            "forecast": 6947.29,
+            "lower_95": -423.52,
+            "upper_95": 14318.11,
+            "actual": 6200,
+            "error": -747.29,
+            "ape": 12.053
+          }
+        ],
+        "SIMP": [
+          {
+            "period": 1,
+            "date": "2024-01",
+            "forecast": 360.9,
+            "lower_95": 282.64,
+            "upper_95": 439.16,
+            "actual": 366,
+            "error": 5.1,
+            "ape": 1.393
+          },
+          {
+            "period": 2,
+            "date": "2024-02",
+            "forecast": 360.22,
+            "lower_95": 227.99,
+            "upper_95": 492.46,
+            "actual": 360,
+            "error": -0.22,
+            "ape": 0.061
+          },
+          {
+            "period": 3,
+            "date": "2024-03",
+            "forecast": 353.21,
+            "lower_95": 190.46,
+            "upper_95": 515.96,
+            "actual": 382,
+            "error": 28.79,
+            "ape": 7.537
+          },
+          {
+            "period": 4,
+            "date": "2024-04",
+            "forecast": 348.54,
+            "lower_95": 160.43,
+            "upper_95": 536.64,
+            "actual": 362,
+            "error": 13.46,
+            "ape": 3.718
+          },
+          {
+            "period": 5,
+            "date": "2024-05",
+            "forecast": 355.54,
+            "lower_95": 145.71,
+            "upper_95": 565.36,
+            "actual": 372,
+            "error": 16.46,
+            "ape": 4.425
+          },
+          {
+            "period": 6,
+            "date": "2024-06",
+            "forecast": 357.95,
+            "lower_95": 131.21,
+            "upper_95": 584.7,
+            "actual": 362,
+            "error": 4.05,
+            "ape": 1.119
+          },
+          {
+            "period": 7,
+            "date": "2024-07",
+            "forecast": 359.15,
+            "lower_95": 118.18,
+            "upper_95": 600.13,
+            "actual": 392,
+            "error": 32.85,
+            "ape": 8.38
+          },
+          {
+            "period": 8,
+            "date": "2024-08",
+            "forecast": 361.67,
+            "lower_95": 108.79,
+            "upper_95": 614.55,
+            "actual": 384,
+            "error": 22.33,
+            "ape": 5.815
+          },
+          {
+            "period": 9,
+            "date": "2024-09",
+            "forecast": 361.37,
+            "lower_95": 97.54,
+            "upper_95": 625.2,
+            "actual": 398,
+            "error": 36.63,
+            "ape": 9.204
+          },
+          {
+            "period": 10,
+            "date": "2024-10",
+            "forecast": 359.93,
+            "lower_95": 84.64,
+            "upper_95": 635.23,
+            "actual": 424,
+            "error": 64.07,
+            "ape": 15.111
+          },
+          {
+            "period": 11,
+            "date": "2024-11",
+            "forecast": 359.27,
+            "lower_95": 72.5,
+            "upper_95": 646.04,
+            "actual": 394,
+            "error": 34.73,
+            "ape": 8.815
+          },
+          {
+            "period": 12,
+            "date": "2024-12",
+            "forecast": 358.55,
+            "lower_95": 60.67,
+            "upper_95": 656.44,
+            "actual": 378,
+            "error": 19.45,
+            "ape": 5.146
+          }
+        ]
+      },
+      "has_evaluation": true,
+      "evaluation": {
+        "SMAR": {
+          "variable": "SMAR",
+          "mape": 7.242,
+          "rmse": 320.3,
+          "mae": 262.32,
+          "n_periods": 12,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        },
+        "AALI": {
+          "variable": "AALI",
+          "mape": 10.189,
+          "rmse": 756.58,
+          "mae": 611.59,
+          "n_periods": 12,
+          "accuracy_category": "Baik (10% - 20%)"
+        },
+        "SIMP": {
+          "variable": "SIMP",
+          "mape": 5.894,
+          "rmse": 28.77,
+          "mae": 23.18,
+          "n_periods": 12,
+          "accuracy_category": "Sangat Akurat (< 10%)"
+        }
+      },
+      "overall_mape": 7.775,
+      "overall_accuracy_category": "Sangat Akurat (Very Accurate)",
+      "interpretation": "Nilai rata-rata Mean Absolute Percentage Error (Overall MAPE) model adalah 7.775%. Berdasarkan kriteria Lewis (1982), model VECM tergolong dalam kategori 'Sangat Akurat (Very Accurate)', membuktikan keakuratan prediksi harga saham yang sangat andal."
+    }
+  },
+  "history": [
+    {
+      "date": "2013-01",
+      "SMAR": 6700,
+      "AALI": 17961,
+      "SIMP": 1100,
+      "is_training": true
+    },
+    {
+      "date": "2013-02",
+      "SMAR": 6700,
+      "AALI": 17580,
+      "SIMP": 1150,
+      "is_training": true
+    },
+    {
+      "date": "2013-03",
+      "SMAR": 6700,
+      "AALI": 17628,
+      "SIMP": 1050,
+      "is_training": true
+    },
+    {
+      "date": "2013-04",
+      "SMAR": 6700,
+      "AALI": 16866,
+      "SIMP": 800,
+      "is_training": true
+    },
+    {
+      "date": "2013-05",
+      "SMAR": 7450,
+      "AALI": 18581,
+      "SIMP": 870,
+      "is_training": true
+    },
+    {
+      "date": "2013-06",
+      "SMAR": 9800,
+      "AALI": 18771,
+      "SIMP": 900,
+      "is_training": true
+    },
+    {
+      "date": "2013-07",
+      "SMAR": 8400,
+      "AALI": 14817,
+      "SIMP": 690,
+      "is_training": true
+    },
+    {
+      "date": "2013-08",
+      "SMAR": 7000,
+      "AALI": 18819,
+      "SIMP": 710,
+      "is_training": true
+    },
+    {
+      "date": "2013-09",
+      "SMAR": 6700,
+      "AALI": 18581,
+      "SIMP": 750,
+      "is_training": true
+    },
+    {
+      "date": "2013-10",
+      "SMAR": 6500,
+      "AALI": 17723,
+      "SIMP": 800,
+      "is_training": true
+    },
+    {
+      "date": "2013-11",
+      "SMAR": 6300,
+      "AALI": 21201,
+      "SIMP": 850,
+      "is_training": true
+    },
+    {
+      "date": "2013-12",
+      "SMAR": 7850,
+      "AALI": 23917,
+      "SIMP": 780,
+      "is_training": true
+    },
+    {
+      "date": "2014-01",
+      "SMAR": 7100,
+      "AALI": 20463,
+      "SIMP": 725,
+      "is_training": true
+    },
+    {
+      "date": "2014-02",
+      "SMAR": 7000,
+      "AALI": 24298,
+      "SIMP": 815,
+      "is_training": true
+    },
+    {
+      "date": "2014-03",
+      "SMAR": 7150,
+      "AALI": 24774,
+      "SIMP": 915,
+      "is_training": true
+    },
+    {
+      "date": "2014-04",
+      "SMAR": 6675,
+      "AALI": 28014,
+      "SIMP": 1000,
+      "is_training": true
+    },
+    {
+      "date": "2014-05",
+      "SMAR": 6350,
+      "AALI": 26037,
+      "SIMP": 1045,
+      "is_training": true
+    },
+    {
+      "date": "2014-06",
+      "SMAR": 6475,
+      "AALI": 26847,
+      "SIMP": 1010,
+      "is_training": true
+    },
+    {
+      "date": "2014-07",
+      "SMAR": 6350,
+      "AALI": 25441,
+      "SIMP": 895,
+      "is_training": true
+    },
+    {
+      "date": "2014-08",
+      "SMAR": 6600,
+      "AALI": 24298,
+      "SIMP": 830,
+      "is_training": true
+    },
+    {
+      "date": "2014-09",
+      "SMAR": 6750,
+      "AALI": 21916,
+      "SIMP": 825,
+      "is_training": true
+    },
+    {
+      "date": "2014-10",
+      "SMAR": 7900,
+      "AALI": 22392,
+      "SIMP": 775,
+      "is_training": true
+    },
+    {
+      "date": "2014-11",
+      "SMAR": 8000,
+      "AALI": 22868,
+      "SIMP": 750,
+      "is_training": true
+    },
+    {
+      "date": "2014-12",
+      "SMAR": 8100,
+      "AALI": 23107,
+      "SIMP": 705,
+      "is_training": true
+    },
+    {
+      "date": "2015-01",
+      "SMAR": 6850,
+      "AALI": 22154,
+      "SIMP": 690,
+      "is_training": true
+    },
+    {
+      "date": "2015-02",
+      "SMAR": 6700,
+      "AALI": 23488,
+      "SIMP": 745,
+      "is_training": true
+    },
+    {
+      "date": "2015-03",
+      "SMAR": 6475,
+      "AALI": 23154,
+      "SIMP": 700,
+      "is_training": true
+    },
+    {
+      "date": "2015-04",
+      "SMAR": 6200,
+      "AALI": 19391,
+      "SIMP": 640,
+      "is_training": true
+    },
+    {
+      "date": "2015-05",
+      "SMAR": 5425,
+      "AALI": 23631,
+      "SIMP": 625,
+      "is_training": true
+    },
+    {
+      "date": "2015-06",
+      "SMAR": 4500,
+      "AALI": 21868,
+      "SIMP": 600,
+      "is_training": true
+    },
+    {
+      "date": "2015-07",
+      "SMAR": 5000,
+      "AALI": 19129,
+      "SIMP": 535,
+      "is_training": true
+    },
+    {
+      "date": "2015-08",
+      "SMAR": 4525,
+      "AALI": 16318,
+      "SIMP": 470,
+      "is_training": true
+    },
+    {
+      "date": "2015-09",
+      "SMAR": 4450,
+      "AALI": 17270,
+      "SIMP": 445,
+      "is_training": true
+    },
+    {
+      "date": "2015-10",
+      "SMAR": 4700,
+      "AALI": 18962,
+      "SIMP": 463,
+      "is_training": true
+    },
+    {
+      "date": "2015-11",
+      "SMAR": 4485,
+      "AALI": 16151,
+      "SIMP": 375,
+      "is_training": true
+    },
+    {
+      "date": "2015-12",
+      "SMAR": 4200,
+      "AALI": 15103,
+      "SIMP": 332,
+      "is_training": true
+    },
+    {
+      "date": "2016-01",
+      "SMAR": 4000,
+      "AALI": 16270,
+      "SIMP": 322,
+      "is_training": true
+    },
+    {
+      "date": "2016-02",
+      "SMAR": 3305,
+      "AALI": 14150,
+      "SIMP": 361,
+      "is_training": true
+    },
+    {
+      "date": "2016-03",
+      "SMAR": 3300,
+      "AALI": 17342,
+      "SIMP": 472,
+      "is_training": true
+    },
+    {
+      "date": "2016-04",
+      "SMAR": 2995,
+      "AALI": 15341,
+      "SIMP": 486,
+      "is_training": true
+    },
+    {
+      "date": "2016-05",
+      "SMAR": 3500,
+      "AALI": 13483,
+      "SIMP": 456,
+      "is_training": true
+    },
+    {
+      "date": "2016-06",
+      "SMAR": 3400,
+      "AALI": 14700,
+      "SIMP": 444,
+      "is_training": true
+    },
+    {
+      "date": "2016-07",
+      "SMAR": 3750,
+      "AALI": 14500,
+      "SIMP": 462,
+      "is_training": true
+    },
+    {
+      "date": "2016-08",
+      "SMAR": 4400,
+      "AALI": 16400,
+      "SIMP": 515,
+      "is_training": true
+    },
+    {
+      "date": "2016-09",
+      "SMAR": 4250,
+      "AALI": 14825,
+      "SIMP": 498,
+      "is_training": true
+    },
+    {
+      "date": "2016-10",
+      "SMAR": 4500,
+      "AALI": 15250,
+      "SIMP": 500,
+      "is_training": true
+    },
+    {
+      "date": "2016-11",
+      "SMAR": 4800,
+      "AALI": 16550,
+      "SIMP": 515,
+      "is_training": true
+    },
+    {
+      "date": "2016-12",
+      "SMAR": 4350,
+      "AALI": 16775,
+      "SIMP": 494,
+      "is_training": true
+    },
+    {
+      "date": "2017-01",
+      "SMAR": 4100,
+      "AALI": 15775,
+      "SIMP": 510,
+      "is_training": true
+    },
+    {
+      "date": "2017-02",
+      "SMAR": 4200,
+      "AALI": 14950,
+      "SIMP": 505,
+      "is_training": true
+    },
+    {
+      "date": "2017-03",
+      "SMAR": 4100,
+      "AALI": 14900,
+      "SIMP": 625,
+      "is_training": true
+    },
+    {
+      "date": "2017-04",
+      "SMAR": 4100,
+      "AALI": 14400,
+      "SIMP": 635,
+      "is_training": true
+    },
+    {
+      "date": "2017-05",
+      "SMAR": 4000,
+      "AALI": 14300,
+      "SIMP": 595,
+      "is_training": true
+    },
+    {
+      "date": "2017-06",
+      "SMAR": 4100,
+      "AALI": 14700,
+      "SIMP": 550,
+      "is_training": true
+    },
+    {
+      "date": "2017-07",
+      "SMAR": 3810,
+      "AALI": 14725,
+      "SIMP": 510,
+      "is_training": true
+    },
+    {
+      "date": "2017-08",
+      "SMAR": 3800,
+      "AALI": 14750,
+      "SIMP": 498,
+      "is_training": true
+    },
+    {
+      "date": "2017-09",
+      "SMAR": 4150,
+      "AALI": 14875,
+      "SIMP": 520,
+      "is_training": true
+    },
+    {
+      "date": "2017-10",
+      "SMAR": 4000,
+      "AALI": 14575,
+      "SIMP": 520,
+      "is_training": true
+    },
+    {
+      "date": "2017-11",
+      "SMAR": 3800,
+      "AALI": 13850,
+      "SIMP": 494,
+      "is_training": true
+    },
+    {
+      "date": "2017-12",
+      "SMAR": 3420,
+      "AALI": 13150,
+      "SIMP": 464,
+      "is_training": true
+    },
+    {
+      "date": "2018-01",
+      "SMAR": 3700,
+      "AALI": 13000,
+      "SIMP": 520,
+      "is_training": true
+    },
+    {
+      "date": "2018-02",
+      "SMAR": 3450,
+      "AALI": 14425,
+      "SIMP": 525,
+      "is_training": true
+    },
+    {
+      "date": "2018-03",
+      "SMAR": 4630,
+      "AALI": 13475,
+      "SIMP": 595,
+      "is_training": true
+    },
+    {
+      "date": "2018-04",
+      "SMAR": 3700,
+      "AALI": 12775,
+      "SIMP": 565,
+      "is_training": true
+    },
+    {
+      "date": "2018-05",
+      "SMAR": 4090,
+      "AALI": 12550,
+      "SIMP": 545,
+      "is_training": true
+    },
+    {
+      "date": "2018-06",
+      "SMAR": 4100,
+      "AALI": 11200,
+      "SIMP": 492,
+      "is_training": true
+    },
+    {
+      "date": "2018-07",
+      "SMAR": 3870,
+      "AALI": 10875,
+      "SIMP": 478,
+      "is_training": true
+    },
+    {
+      "date": "2018-08",
+      "SMAR": 4400,
+      "AALI": 13500,
+      "SIMP": 505,
+      "is_training": true
+    },
+    {
+      "date": "2018-09",
+      "SMAR": 3900,
+      "AALI": 12400,
+      "SIMP": 490,
+      "is_training": true
+    },
+    {
+      "date": "2018-10",
+      "SMAR": 3800,
+      "AALI": 12000,
+      "SIMP": 460,
+      "is_training": true
+    },
+    {
+      "date": "2018-11",
+      "SMAR": 3800,
+      "AALI": 10975,
+      "SIMP": 484,
+      "is_training": true
+    },
+    {
+      "date": "2018-12",
+      "SMAR": 4050,
+      "AALI": 11825,
+      "SIMP": 460,
+      "is_training": true
+    },
+    {
+      "date": "2019-01",
+      "SMAR": 4120,
+      "AALI": 14000,
+      "SIMP": 510,
+      "is_training": true
+    },
+    {
+      "date": "2019-02",
+      "SMAR": 4100,
+      "AALI": 12400,
+      "SIMP": 476,
+      "is_training": true
+    },
+    {
+      "date": "2019-03",
+      "SMAR": 4110,
+      "AALI": 11225,
+      "SIMP": 440,
+      "is_training": true
+    },
+    {
+      "date": "2019-04",
+      "SMAR": 4120,
+      "AALI": 10875,
+      "SIMP": 414,
+      "is_training": true
+    },
+    {
+      "date": "2019-05",
+      "SMAR": 4120,
+      "AALI": 10550,
+      "SIMP": 328,
+      "is_training": true
+    },
+    {
+      "date": "2019-06",
+      "SMAR": 4200,
+      "AALI": 10400,
+      "SIMP": 350,
+      "is_training": true
+    },
+    {
+      "date": "2019-07",
+      "SMAR": 4050,
+      "AALI": 9975,
+      "SIMP": 336,
+      "is_training": true
+    },
+    {
+      "date": "2019-08",
+      "SMAR": 3840,
+      "AALI": 10500,
+      "SIMP": 332,
+      "is_training": true
+    },
+    {
+      "date": "2019-09",
+      "SMAR": 3960,
+      "AALI": 10775,
+      "SIMP": 330,
+      "is_training": true
+    },
+    {
+      "date": "2019-10",
+      "SMAR": 3840,
+      "AALI": 11425,
+      "SIMP": 352,
+      "is_training": true
+    },
+    {
+      "date": "2019-11",
+      "SMAR": 3650,
+      "AALI": 12600,
+      "SIMP": 362,
+      "is_training": true
+    },
+    {
+      "date": "2019-12",
+      "SMAR": 4140,
+      "AALI": 14575,
+      "SIMP": 432,
+      "is_training": true
+    },
+    {
+      "date": "2020-01",
+      "SMAR": 3740,
+      "AALI": 11875,
+      "SIMP": 368,
+      "is_training": true
+    },
+    {
+      "date": "2020-02",
+      "SMAR": 3410,
+      "AALI": 9800,
+      "SIMP": 276,
+      "is_training": true
+    },
+    {
+      "date": "2020-03",
+      "SMAR": 2470,
+      "AALI": 5400,
+      "SIMP": 210,
+      "is_training": true
+    },
+    {
+      "date": "2020-04",
+      "SMAR": 2930,
+      "AALI": 6100,
+      "SIMP": 214,
+      "is_training": true
+    },
+    {
+      "date": "2020-05",
+      "SMAR": 2780,
+      "AALI": 7400,
+      "SIMP": 202,
+      "is_training": true
+    },
+    {
+      "date": "2020-06",
+      "SMAR": 3130,
+      "AALI": 8225,
+      "SIMP": 254,
+      "is_training": true
+    },
+    {
+      "date": "2020-07",
+      "SMAR": 3000,
+      "AALI": 9700,
+      "SIMP": 322,
+      "is_training": true
+    },
+    {
+      "date": "2020-08",
+      "SMAR": 3180,
+      "AALI": 10175,
+      "SIMP": 324,
+      "is_training": true
+    },
+    {
+      "date": "2020-09",
+      "SMAR": 2890,
+      "AALI": 10175,
+      "SIMP": 296,
+      "is_training": true
+    },
+    {
+      "date": "2020-10",
+      "SMAR": 3000,
+      "AALI": 10875,
+      "SIMP": 330,
+      "is_training": true
+    },
+    {
+      "date": "2020-11",
+      "SMAR": 3150,
+      "AALI": 12325,
+      "SIMP": 384,
+      "is_training": true
+    },
+    {
+      "date": "2020-12",
+      "SMAR": 4150,
+      "AALI": 12325,
+      "SIMP": 420,
+      "is_training": true
+    },
+    {
+      "date": "2021-01",
+      "SMAR": 3500,
+      "AALI": 11175,
+      "SIMP": 386,
+      "is_training": true
+    },
+    {
+      "date": "2021-02",
+      "SMAR": 3900,
+      "AALI": 11250,
+      "SIMP": 442,
+      "is_training": true
+    },
+    {
+      "date": "2021-03",
+      "SMAR": 3810,
+      "AALI": 10025,
+      "SIMP": 490,
+      "is_training": true
+    },
+    {
+      "date": "2021-04",
+      "SMAR": 4250,
+      "AALI": 9325,
+      "SIMP": 575,
+      "is_training": true
+    },
+    {
+      "date": "2021-05",
+      "SMAR": 4700,
+      "AALI": 8825,
+      "SIMP": 520,
+      "is_training": true
+    },
+    {
+      "date": "2021-06",
+      "SMAR": 3730,
+      "AALI": 7600,
+      "SIMP": 436,
+      "is_training": true
+    },
+    {
+      "date": "2021-07",
+      "SMAR": 4000,
+      "AALI": 7950,
+      "SIMP": 446,
+      "is_training": true
+    },
+    {
+      "date": "2021-08",
+      "SMAR": 4000,
+      "AALI": 8450,
+      "SIMP": 428,
+      "is_training": true
+    },
+    {
+      "date": "2021-09",
+      "SMAR": 4290,
+      "AALI": 9775,
+      "SIMP": 458,
+      "is_training": true
+    },
+    {
+      "date": "2021-10",
+      "SMAR": 4470,
+      "AALI": 10725,
+      "SIMP": 482,
+      "is_training": true
+    },
+    {
+      "date": "2021-11",
+      "SMAR": 4430,
+      "AALI": 9975,
+      "SIMP": 446,
+      "is_training": true
+    },
+    {
+      "date": "2021-12",
+      "SMAR": 4360,
+      "AALI": 9500,
+      "SIMP": 456,
+      "is_training": true
+    },
+    {
+      "date": "2022-01",
+      "SMAR": 4540,
+      "AALI": 9900,
+      "SIMP": 456,
+      "is_training": true
+    },
+    {
+      "date": "2022-02",
+      "SMAR": 4530,
+      "AALI": 11350,
+      "SIMP": 496,
+      "is_training": true
+    },
+    {
+      "date": "2022-03",
+      "SMAR": 4800,
+      "AALI": 12550,
+      "SIMP": 500,
+      "is_training": true
+    },
+    {
+      "date": "2022-04",
+      "SMAR": 4630,
+      "AALI": 12500,
+      "SIMP": 505,
+      "is_training": true
+    },
+    {
+      "date": "2022-05",
+      "SMAR": 5000,
+      "AALI": 12000,
+      "SIMP": 520,
+      "is_training": true
+    },
+    {
+      "date": "2022-06",
+      "SMAR": 4500,
+      "AALI": 9800,
+      "SIMP": 474,
+      "is_training": true
+    },
+    {
+      "date": "2022-07",
+      "SMAR": 4650,
+      "AALI": 9650,
+      "SIMP": 470,
+      "is_training": true
+    },
+    {
+      "date": "2022-08",
+      "SMAR": 4730,
+      "AALI": 9150,
+      "SIMP": 456,
+      "is_training": true
+    },
+    {
+      "date": "2022-09",
+      "SMAR": 4580,
+      "AALI": 8250,
+      "SIMP": 412,
+      "is_training": true
+    },
+    {
+      "date": "2022-10",
+      "SMAR": 4630,
+      "AALI": 8500,
+      "SIMP": 424,
+      "is_training": true
+    },
+    {
+      "date": "2022-11",
+      "SMAR": 5225,
+      "AALI": 8325,
+      "SIMP": 416,
+      "is_training": true
+    },
+    {
+      "date": "2022-12",
+      "SMAR": 4950,
+      "AALI": 8025,
+      "SIMP": 414,
+      "is_training": true
+    },
+    {
+      "date": "2023-01",
+      "SMAR": 5150,
+      "AALI": 8225,
+      "SIMP": 424,
+      "is_training": true
+    },
+    {
+      "date": "2023-02",
+      "SMAR": 5150,
+      "AALI": 8300,
+      "SIMP": 426,
+      "is_training": true
+    },
+    {
+      "date": "2023-03",
+      "SMAR": 5150,
+      "AALI": 8100,
+      "SIMP": 400,
+      "is_training": true
+    },
+    {
+      "date": "2023-04",
+      "SMAR": 5400,
+      "AALI": 7725,
+      "SIMP": 398,
+      "is_training": true
+    },
+    {
+      "date": "2023-05",
+      "SMAR": 4700,
+      "AALI": 7050,
+      "SIMP": 374,
+      "is_training": true
+    },
+    {
+      "date": "2023-06",
+      "SMAR": 4670,
+      "AALI": 7475,
+      "SIMP": 406,
+      "is_training": true
+    },
+    {
+      "date": "2023-07",
+      "SMAR": 4700,
+      "AALI": 7575,
+      "SIMP": 424,
+      "is_training": true
+    },
+    {
+      "date": "2023-08",
+      "SMAR": 4400,
+      "AALI": 7600,
+      "SIMP": 394,
+      "is_training": true
+    },
+    {
+      "date": "2023-09",
+      "SMAR": 4380,
+      "AALI": 7500,
+      "SIMP": 396,
+      "is_training": true
+    },
+    {
+      "date": "2023-10",
+      "SMAR": 4280,
+      "AALI": 7050,
+      "SIMP": 376,
+      "is_training": true
+    },
+    {
+      "date": "2023-11",
+      "SMAR": 3850,
+      "AALI": 7600,
+      "SIMP": 384,
+      "is_training": true
+    },
+    {
+      "date": "2023-12",
+      "SMAR": 4000,
+      "AALI": 7025,
+      "SIMP": 376,
+      "is_training": true
+    },
+    {
+      "date": "2024-01",
+      "SMAR": 3800,
+      "AALI": 6900,
+      "SIMP": 366,
+      "is_training": false
+    },
+    {
+      "date": "2024-02",
+      "SMAR": 3820,
+      "AALI": 6725,
+      "SIMP": 360,
+      "is_training": false
+    },
+    {
+      "date": "2024-03",
+      "SMAR": 3770,
+      "AALI": 6900,
+      "SIMP": 382,
+      "is_training": false
+    },
+    {
+      "date": "2024-04",
+      "SMAR": 3800,
+      "AALI": 6500,
+      "SIMP": 362,
+      "is_training": false
+    },
+    {
+      "date": "2024-05",
+      "SMAR": 3620,
+      "AALI": 5875,
+      "SIMP": 372,
+      "is_training": false
+    },
+    {
+      "date": "2024-06",
+      "SMAR": 3370,
+      "AALI": 5400,
+      "SIMP": 362,
+      "is_training": false
+    },
+    {
+      "date": "2024-07",
+      "SMAR": 3400,
+      "AALI": 6025,
+      "SIMP": 392,
+      "is_training": false
+    },
+    {
+      "date": "2024-08",
+      "SMAR": 3770,
+      "AALI": 6050,
+      "SIMP": 384,
+      "is_training": false
+    },
+    {
+      "date": "2024-09",
+      "SMAR": 3920,
+      "AALI": 6600,
+      "SIMP": 398,
+      "is_training": false
+    },
+    {
+      "date": "2024-10",
+      "SMAR": 4180,
+      "AALI": 6775,
+      "SIMP": 424,
+      "is_training": false
+    },
+    {
+      "date": "2024-11",
+      "SMAR": 3930,
+      "AALI": 6200,
+      "SIMP": 394,
+      "is_training": false
+    },
+    {
+      "date": "2024-12",
+      "SMAR": 3650,
+      "AALI": 6200,
+      "SIMP": 378,
+      "is_training": false
+    }
+  ]
+}
